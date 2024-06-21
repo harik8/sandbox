@@ -24,7 +24,7 @@ jobs:
         run: |
           # Find modified folders containing a Dockerfile
           # MODIFIED_FOLDERS=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep 'Dockerfile' | xargs -L1 dirname | uniq)
-          MODIFIED_FILES=$(git diff HEAD HEAD~ --name-only)
+          MODIFIED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
           echo "Modified folders: $MODIFIED_FOLDERS"
           echo "Modified files: $MODIFIED_FILES"
           echo "::set-output name=modified_folders::$MODIFIED_FOLDERS"
