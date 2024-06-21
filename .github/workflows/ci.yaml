@@ -1,4 +1,4 @@
-name: Docker Build and Push for Modified Folders
+name: CI
 
 on:
   push:
@@ -12,9 +12,12 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read  # This is required for actions/checkout
+
 jobs:
   CI:
-
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -38,12 +41,27 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v4
       with:
-        context: show-ip/
-        # file: show-ip/Dockerfile
+        context: show-ip
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/show-ip:latest
 
     # Verify that the Docker image is built
     - name: Image digest
       run: echo ${{ steps.build.outputs.digest }}
-      
+
+  AWS:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Git clone the repository
+      uses: actions/checkout@v4
+
+    - name: configure aws credentials
+      uses: aws-actions/configure-aws-credentials@v3
+      with:
+        role-to-assume: ${{ variables.IAM_ROLE_ARN }}
+        role-session-name: github
+        aws-region: ${{ variables.AWS_REGION }}
+        
+    - name: Set Kube Context
+      run: |
+        aws eks update-kubeconfig --region ${{ variables.AWS_REGION }} --name ${{ variables.EKS_CLUSTER_NAME }} --role-arn ${{ variables.IAM_ROLE_ARN }}
