@@ -60,7 +60,7 @@ jobs:
       uses: aws-actions/configure-aws-credentials@v3
       with:
         role-to-assume: ${{ vars.IAM_ROLE_ARN }}
-        role-session-name: github
+        role-session-name: gh-workflow
         aws-region: ${{ vars.AWS_REGION }}
 
     - name: Set Kube Context
