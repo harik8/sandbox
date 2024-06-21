@@ -61,7 +61,6 @@ jobs:
       with:
         role-to-assume: ${{ vars.IAM_ROLE_ARN }}
         aws-region: ${{ vars.AWS_REGION }}
-        audience: sts.amazonaws.com
 
     - name: Set Kube Context
       run: |
