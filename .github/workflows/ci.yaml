@@ -68,11 +68,11 @@ jobs:
         aws eks update-kubeconfig --region ${{ vars.AWS_REGION }} --name ${{ vars.EKS_CLUSTER_NAME }} --role-arn ${{ vars.IAM_ROLE_ARN }}
 
     - name: Set up Helm
-      uses: azure/setup-helm@v1
+      uses: azure/setup-helm@v4.2.0
       with:
         version: 'latest'
 
     - name: Run Helm
       run: |
         helm version
-        helm ls --all-namepsaces
+        helm ls --A
