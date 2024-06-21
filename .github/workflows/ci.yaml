@@ -58,10 +58,10 @@ jobs:
     - name: configure aws credentials
       uses: aws-actions/configure-aws-credentials@v3
       with:
-        role-to-assume: ${{ variables.IAM_ROLE_ARN }}
+        role-to-assume: ${{ vars.IAM_ROLE_ARN }}
         role-session-name: github
-        aws-region: ${{ variables.AWS_REGION }}
-        
+        aws-region: ${{ vars.AWS_REGION }}
+
     - name: Set Kube Context
       run: |
-        aws eks update-kubeconfig --region ${{ variables.AWS_REGION }} --name ${{ variables.EKS_CLUSTER_NAME }} --role-arn ${{ variables.IAM_ROLE_ARN }}
+        aws eks update-kubeconfig --region ${{ vars.AWS_REGION }} --name ${{ vars.EKS_CLUSTER_NAME }} --role-arn ${{ vars.IAM_ROLE_ARN }}
