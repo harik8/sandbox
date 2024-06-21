@@ -51,6 +51,7 @@ jobs:
 
   AWS:
     runs-on: ubuntu-latest
+    needs: [CI]
     steps:
     - name: Git clone the repository
       uses: actions/checkout@v4
@@ -65,3 +66,12 @@ jobs:
     - name: Set Kube Context
       run: |
         aws eks update-kubeconfig --region ${{ vars.AWS_REGION }} --name ${{ vars.EKS_CLUSTER_NAME }} --role-arn ${{ vars.IAM_ROLE_ARN }}
+
+    - name: Set up Helm
+      uses: azure/setup-helm@v1
+      with:
+        version: 'latest'
+
+    - name: Run Helm
+      run: |
+        helm ls -A
