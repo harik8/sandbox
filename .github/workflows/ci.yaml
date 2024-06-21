@@ -60,7 +60,6 @@ jobs:
       uses: aws-actions/configure-aws-credentials@v4
       with:
         role-to-assume: ${{ vars.IAM_ROLE_ARN }}
-        role-session-name: gh-workflow
         aws-region: ${{ vars.AWS_REGION }}
         audience: sts.amazonaws.com
 
