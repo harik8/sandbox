@@ -38,7 +38,8 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v4
       with:
-        context: show-ip/Dockerfle
+        context: .
+        file: show-ip/Dockerfile
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/show-ip:latest
 
