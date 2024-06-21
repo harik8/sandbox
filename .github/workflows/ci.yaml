@@ -57,7 +57,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: configure aws credentials
-      uses: aws-actions/configure-aws-credentials@v3
+      uses: aws-actions/configure-aws-credentials@v4
       with:
         role-to-assume: ${{ vars.IAM_ROLE_ARN }}
         role-session-name: gh-workflow
