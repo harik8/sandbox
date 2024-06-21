@@ -1,0 +1,57 @@
+name: Docker Build and Push for Modified Folders
+
+on:
+  push:
+    branches:
+      - main
+      - DEV-*
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  find-modified-folders:
+    runs-on: ubuntu-latest
+    outputs:
+      modified_folders: ${{ steps.find.outputs.modified_folders }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Find modified folders
+        id: find
+        run: |
+          # Find modified folders containing a Dockerfile
+          MODIFIED_FOLDERS=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep 'Dockerfile' | xargs -L1 dirname | uniq)
+          echo "Modified folders: $MODIFIED_FOLDERS"
+          echo "::set-output name=modified_folders::$MODIFIED_FOLDERS"
+
+  build-and-push:
+    runs-on: ubuntu-latest
+    needs: find-modified-folders
+    strategy:
+      matrix:
+        folder: ${{ fromJSON(needs.find-modified-folders.outputs.modified_folders) }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: ${{ matrix.folder }}
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/${{ matrix.folder }}:latest
+
+      - name: Image digest
+        run: echo ${{ steps.build.outputs.digest }}
