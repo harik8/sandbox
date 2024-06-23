@@ -74,5 +74,6 @@ jobs:
     - name: Run Helm
       run: |
         aws sts get-caller-identity
-        helm version
-        helm ls -A
+        aws s3 ls
+        # helm version
+        # helm ls -A
