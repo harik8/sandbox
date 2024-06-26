@@ -74,6 +74,7 @@ jobs:
     - name: Run Helm
       run: |
         aws sts get-caller-identity
+        aws eks describe-cluster --name ${{ vars.EKS_CLUSTER_NAME }}
         # aws s3 ls
         # helm version
         helm ls -A
