@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "cicd-template.fullname" . }}
+  name: {{ include "Chart.Name.fullname" . }}
   labels:
-    {{- include "cicd-template.labels" . | nindent 4 }}
+    {{- include "Chart.Name.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "cicd-template.fullname" . }}
+    name: {{ include "Chart.Name.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:

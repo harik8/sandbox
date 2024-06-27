@@ -74,7 +74,14 @@ jobs:
 
     - name: Deploy
       run: |
-        aws sts get-caller-identity
-        pwd
-        ls
+        sed -i "s/^name: .*/name: show-ip/" cicd-template/Chart.yaml
+        sed -i "s/^appVersion: .*/appVersion: latest/" Chart.yaml
+
+        helm upgrade --install \
+          --atomic \
+          --create-namespace \
+          --namespace show-ip-2 \
+          --set image.tag=latest \
+          -f show-ip/.github/values.yaml -f show-ip/.github/sandbox/values.yaml \
+          show-ip cicd-template
 
