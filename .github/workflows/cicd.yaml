@@ -75,7 +75,7 @@ jobs:
     - name: Deploy
       run: |
         sed -i "s/^name: .*/name: show-ip/" cicd-template/Chart.yaml
-        sed -i "s/^appVersion: .*/appVersion: latest/" Chart.yaml
+        sed -i "s/^appVersion: .*/appVersion: latest/" cicd-template/Chart.yaml
 
         helm upgrade --install \
           --atomic \
