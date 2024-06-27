@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 <title>Show IP</title>
@@ -12,27 +12,5 @@
 </head>
 <body>
 <h1 align="center" style="color:blue;">$HOSTNAME : $IP_ADDR</h1>
-</body>
-</html> -->
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hostname and IP Demo</title>
-</head>
-<body>
-    <h1>Hostname and IP Information</h1>
-    <div>
-        <strong>Hostname:</strong> <span id="hostname"></span>
-    </div>
-    <div>
-        <strong>Pod IP Address:</strong> <span id="podIp"></span>
-    </div>
-    <script>
-        document.getElementById('hostname').textContent = process.env.HOSTNAME || 'Hostname not available';
-        document.getElementById('podIp').textContent = process.env.IP_ADDR || 'IP Address not available';
-    </script>
 </body>
 </html>
