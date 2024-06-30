@@ -80,7 +80,7 @@ jobs:
         helm upgrade --install \
           --atomic \
           --create-namespace \
-          --namespace show-ip-2 \
+          --namespace show-ip \
           --set image.tag=latest \
           -f show-ip/.github/values.yaml -f show-ip/.github/sandbox/values.yaml \
           show-ip cicd-template
