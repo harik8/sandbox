@@ -1,6 +1,7 @@
 FROM nginx:1.27.0
 
-RUN sed -i "s/\$HOSTNAME/$HOSTNAME/g; s/\$IP_ADDR/$IP_ADDR/g" index.html
- 
-COPY src/index.html /usr/share/nginx/html/index.html
+WORKDIR /usr/share/nginx/html
 
+COPY src/index.html .
+
+RUN sed -i "s/\$HOSTNAME/$HOSTNAME/g; s/\$IP_ADDR/$IP_ADDR/g" index.html
