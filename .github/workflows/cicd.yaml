@@ -67,7 +67,7 @@ jobs:
     
     - name: Assume STS Role
       run: |
-        aws sts assume-role --role-arn ${{ vars.IAM_ROLE_ARN }}
+        aws sts assume-role --role-arn ${{ vars.IAM_ROLE_ARN }} --role-session-name GitHubActions
 
     # - name: Set Kube Context
     #   run: |
