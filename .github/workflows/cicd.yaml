@@ -4,9 +4,10 @@ on:
   push:
     branches:
     - main
-    - DEV-*
+    - D-*
     paths:
     - show-ip/**
+    - .gitub/workflows/cicd.yaml
   pull_request:
     branches:
     - main
