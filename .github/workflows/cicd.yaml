@@ -20,7 +20,7 @@ permissions:
 jobs:
   CI:
     # The type of runner that the job will run on
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -61,20 +61,20 @@ jobs:
     - name: Git clone the repository
       uses: actions/checkout@v4
 
-    - name: configure aws credentials
-      uses: aws-actions/configure-aws-credentials@v4 
-      with:
-        role-to-assume: ${{ vars.IAM_ROLE_ARN }}
-        aws-region: ${{ vars.AWS_REGION }}
+    # - name: configure aws credentials
+    #   uses: aws-actions/configure-aws-credentials@v4 
+    #   with:
+    #     role-to-assume: ${{ vars.IAM_ROLE_ARN }}
+    #     aws-region: ${{ vars.AWS_REGION }}
 
     
-    - name: Assume STS Role
-      run: |
-        aws sts assume-role --role-arn ${{ vars.IAM_ROLE_ARN }} --role-session-name GitHubActions
+    # - name: Assume STS Role
+    #   run: |
+    #     aws sts assume-role --role-arn ${{ vars.IAM_ROLE_ARN }} --role-session-name GitHubActions
 
-    - name: Set Kube Context
-      run: |
-        aws eks update-kubeconfig --region ${{ vars.AWS_REGION }} --name ${{ vars.EKS_CLUSTER_NAME }} --role-arn ${{ vars.EKS_DEPLOY_ROLE_ARN }}
+    # - name: Set Kube Context
+    #   run: |
+    #     aws eks update-kubeconfig --region ${{ vars.AWS_REGION }} --name ${{ vars.EKS_CLUSTER_NAME }} --role-arn ${{ vars.EKS_DEPLOY_ROLE_ARN }}
 
     - name: Set up Helm
       uses: azure/setup-helm@v4.2.0
