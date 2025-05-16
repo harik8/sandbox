@@ -19,7 +19,7 @@ permissions:
   contents: read  # This is required for actions/checkout
 
 env:
-  REPO_URL: '${{ var.REPO_URL }}'
+  REPO_URL: '${{ vars.REPO_URL }}'
   RUNNER_TOKEN: '${{ secrets.RUNNER_TOKEN }}'
 
 jobs:
