@@ -8,6 +8,7 @@ on:
     paths:
     - show-ip/**
     - .gitub/workflows/cicd.yaml
+    - gh-runner/**
   pull_request:
     branches:
     - main
@@ -20,7 +21,7 @@ permissions:
 jobs:
   CI:
     # The type of runner that the job will run on
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -47,7 +48,7 @@ jobs:
       with:
         context: show-ip
         push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/show-ip:latest
+        tags: ${{ secrets.DOCKER_USERNAME }}/gh-runner:latest
         platforms: linux/amd64,linux/arm64
 
     # Verify that the Docker image is built
@@ -61,20 +62,19 @@ jobs:
     - name: Git clone the repository
       uses: actions/checkout@v4
 
-    - name: configure aws credentials
-      uses: aws-actions/configure-aws-credentials@v4 
-      with:
-        role-to-assume: ${{ vars.IAM_ROLE_ARN }}
-        aws-region: ${{ vars.AWS_REGION }}
+    # - name: configure aws credentials
+    #   uses: aws-actions/configure-aws-credentials@v4 
+    #   with:
+    #     role-to-assume: ${{ vars.IAM_ROLE_ARN }}
+    #     aws-region: ${{ vars.AWS_REGION }}
 
-    
-    - name: Assume STS Role
-      run: |
-        aws sts assume-role --role-arn ${{ vars.IAM_ROLE_ARN }} --role-session-name GitHubActions
+    # - name: Assume STS Role
+    #   run: |
+    #     aws sts assume-role --role-arn ${{ vars.IAM_ROLE_ARN }} --role-session-name GitHubActions
 
-    - name: Set Kube Context
-      run: |
-        aws eks update-kubeconfig --region ${{ vars.AWS_REGION }} --name ${{ vars.EKS_CLUSTER_NAME }} --role-arn ${{ vars.EKS_DEPLOY_ROLE_ARN }}
+    # - name: Set Kube Context
+    #   run: |
+    #     aws eks update-kubeconfig --region ${{ vars.AWS_REGION }} --name ${{ vars.EKS_CLUSTER_NAME }} --role-arn ${{ vars.EKS_DEPLOY_ROLE_ARN }}
 
     - name: Set up Helm
       uses: azure/setup-helm@v4.2.0
@@ -89,7 +89,7 @@ jobs:
         helm upgrade --install \
           --atomic \
           --create-namespace \
-          --namespace show-ip \
+          --namespace gh-runner \
           --set image.tag=latest \
           -f show-ip/.github/values.yaml -f show-ip/.github/sandbox/values.yaml \
           show-ip cicd-template
