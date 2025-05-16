@@ -46,7 +46,7 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v4
       with:
-        context: show-ip
+        context: gh-runner
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/gh-runner:latest
         platforms: linux/amd64,linux/arm64
