@@ -81,5 +81,5 @@ jobs:
           --create-namespace \
           --namespace gha-runner \
           --set image.tag=latest \
-          -f show-ip/.github/values.yaml -f show-ip/.github/sandbox/values.yaml \
-           cicd-template
+          -f gha-runner/.github/values.yaml -f gha-runner/.github/sandbox/values.yaml \
+          cicd-template
