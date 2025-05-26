@@ -29,8 +29,8 @@ WORKDIR /actions-runner
 RUN curl -o actions-runner-linux-arm64-${RUNNER_VERSION}.tar.gz -L \
     https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x86_64-${RUNNER_VERSION}.tar.gz && \
     echo "b5a5cf1138064afd0f0fb1a4a493adaa9bff5485ace3575e99547f004dbb20fa  actions-runner-linux-x86_64-${RUNNER_VERSION}.tar.gz" | shasum -a 256 -c && \
-    tar xzf ./actions-runner-linux-arm64-${RUNNER_VERSION}.tar.gz && \
-    rm actions-runner-linux-arm64-${RUNNER_VERSION}.tar.gz
+    tar xzf ./actions-runner-linux-x86_64-${RUNNER_VERSION}.tar.gz && \
+    rm actions-runner-linux-x86_64-${RUNNER_VERSION}.tar.gz
 
 # Add entrypoint script
 COPY entrypoint.sh /entrypoint.sh
