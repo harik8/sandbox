@@ -98,3 +98,11 @@ canary:
 
 rbac:
   clusterAdmin: true
+
+env:
+  - name: REPO_URL
+    value: https://github.com/harik8/services
+  - name: RUNNER_TOKEN
+    value: AB52EUIKXIPRQ3FPU23OYCDIJC4DM
+  - name: TEST
+    value: test

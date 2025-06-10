@@ -76,10 +76,13 @@ jobs:
         sed -i "s/^name: .*/name: gha-runner/" cicd-template/Chart.yaml
         sed -i "s/^appVersion: .*/appVersion: latest/" cicd-template/Chart.yaml
 
-        helm upgrade --install \
-          --atomic \
+        helm upgrade --install --atomic \
           --create-namespace \
           --namespace gha-runner \
           --set image.tag=latest \
+          --set env[0].name=REPO_URL \
+          --set env[0].value=${{ vars.REPO_URL }} \
+          --set env[1].name=RUNNER_TOKEN \ 
+          --set env[1].value=${{ secrets.RUNNER_TOKEN }} \
           -f gha-runner/.github/values.yaml -f gha-runner/.github/sandbox/values.yaml \
-          cicd-template
+          gha-runner cicd-template
