@@ -1,7 +1,7 @@
 FROM ubuntu:20.04
 
 # Set environment variables
-ENV RUNNER_VERSION=2.324.0
+ENV RUNNER_VERSION=2.325.0
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Install dependencies
