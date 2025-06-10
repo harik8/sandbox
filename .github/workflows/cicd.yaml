@@ -80,9 +80,5 @@ jobs:
           --create-namespace \
           --namespace gha-runner \
           --set image.tag=latest \
-          --set env[0].name=REPO_URL \
-          --set env[0].value=${{ vars.REPO_URL }} \
-          --set env[1].name=RUNNER_TOKEN \ 
-          --set env[1].value=${{ secrets.RUNNER_TOKEN }} \
           -f gha-runner/.github/values.yaml -f gha-runner/.github/sandbox/values.yaml \
           gha-runner cicd-template
