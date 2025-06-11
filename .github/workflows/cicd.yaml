@@ -32,6 +32,8 @@ jobs:
       run: |
         MODIFIED_FILES=$(git diff HEAD HEAD~ --name-only)
         echo $MODIFIED_FILES
+        PARENT_DIRS=$(echo "$MODIFIED_FILES" | grep '/' | cut -d'/' -f1 | sort -u)
+        echo $PARENT_DIRS
 
   CI:
     # The type of runner that the job will run on
