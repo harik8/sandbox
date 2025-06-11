@@ -40,7 +40,10 @@ jobs:
           | sort -u \
           | jq -R . | jq -s .)
         echo $modified_apps
-        echo "modified_apps=$modified_apps" >> $GITHUB_OUTPUT
+        
+        echo "modified_apps<<EOF" >> $GITHUB_OUTPUT
+        echo "$modified_apps" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
 
   CI:
     # The type of runner that the job will run on
