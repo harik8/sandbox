@@ -76,7 +76,7 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v4
       with:
-        context: ${{ inputs.app_name }}
+        context: ${{ matrix.apps }}
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/${{ matrix.apps }}:latest
         platforms: linux/amd64,linux/arm64
