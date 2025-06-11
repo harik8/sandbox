@@ -23,7 +23,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    - name: INIT
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      fetch-depth: 2
+
+    - name: MOdified Files
       run: |
         MODIFIED_FILES=$(git diff HEAD HEAD~ --name-only)
         echo $MODIFIED_FILES
@@ -36,6 +40,7 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - name: Checkout repository
       uses: actions/checkout@v3
+      fetch-depth: 2
 
     # Set up Docker Buildx
     - name: Set up Docker Buildx
