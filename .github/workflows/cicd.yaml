@@ -48,7 +48,7 @@ jobs:
     needs: [INIT]
     strategy:
       matrix:
-        apps: ${{ fromJson(steps.INIT.outputs.modified_apps) }}
+        apps: ${{ fromJson(needs.INIT.outputs.modified_apps) }}
 
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
