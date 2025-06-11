@@ -5,8 +5,6 @@ on:
     branches:
     - main
     - D-*
-    paths:
-    - show-ip/**
   pull_request:
     branches:
     - main
@@ -18,8 +16,6 @@ permissions:
 jobs:
   CICD:
     uses: ./.github/workflows/cicd.yaml
-    with:
-      app_name: show-ip
     secrets:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}

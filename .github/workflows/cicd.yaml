@@ -3,10 +3,6 @@ name: Reusable Workflow
 on:
   workflow_call:
     inputs:
-      app_name:
-        type: string
-        description: Name of the application
-        required: true
       build_args:
         type: string
         description: List of build args for Docker build
@@ -84,7 +80,6 @@ jobs:
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/${{ matrix.apps }}:latest
         platforms: linux/amd64,linux/arm64
-        build-args: ${{ inputs.build_args }}
 
     # Verify that the Docker image is built
     - name: Image digest
