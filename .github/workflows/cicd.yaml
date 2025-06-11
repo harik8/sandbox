@@ -15,6 +15,7 @@ name: CICD
 #   workflow_dispatch:
 
 on:
+  workflow_dispatch:
   workflow_call:
     inputs:
       app_name:
