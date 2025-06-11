@@ -35,7 +35,7 @@ jobs:
       run: |
         modified_apps=$(git diff HEAD HEAD~ --name-only | grep '/' | cut -d'/' -f1 | sort -u)
         echo $modified_apps
-        echo "name=$modified_apps" >> $GITHUB_OUTPUT
+        echo "name=($modified_apps)" >> $GITHUB_OUTPUT
 
   CI:
     # The type of runner that the job will run on
