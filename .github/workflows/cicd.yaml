@@ -12,11 +12,11 @@ on:
         description: List of build args for Docker build
         default: ""
         required: false
-      secrets:
-        DOCKER_USERNAME:
-          required: true
-        DOCKER_PASSWORD:
-          required: true
+    secrets:
+      DOCKER_USERNAME:
+        required: true
+      DOCKER_PASSWORD:
+        required: true
         
 
 permissions:
