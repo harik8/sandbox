@@ -1,0 +1,24 @@
+name: CICD
+
+on:
+  push:
+    branches:
+    - main
+    - D-*
+    paths:
+    - .gitub/workflows/cicd.yaml
+    - gha-runner/**
+  pull_request:
+    branches:
+    - main
+  # workflow_dispatch:
+
+  permissions:
+    id-token: write # This is required for requesting the JWT
+    contents: read  # This is required for actions/checkout
+
+  jobs:
+    CICD:
+      uses: ../../gha-template/cicd.yaml
+      with:
+        app_name: gha-runner

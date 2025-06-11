@@ -1,8 +1,11 @@
 FROM ubuntu:20.04
 
+# ARG RUNNER_TOKEN
+
 # Set environment variables
 ENV RUNNER_VERSION=2.325.0
 ENV DEBIAN_FRONTEND=noninteractive
+# ENV RUNNER_TOKEN=${RUNNER_TOKEN}
 
 # Install dependencies
 RUN apt-get update && \
