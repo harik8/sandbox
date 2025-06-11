@@ -40,7 +40,7 @@ jobs:
           | sort -u \
           | jq -R . | jq -s .)
         echo $modified_apps
-        
+
         echo "modified_apps<<EOF" >> $GITHUB_OUTPUT
         echo "$modified_apps" >> $GITHUB_OUTPUT
         echo "EOF" >> $GITHUB_OUTPUT
@@ -82,7 +82,7 @@ jobs:
       with:
         context: ${{ inputs.app_name }}
         push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/${{ inputs.app_name }}:latest
+        tags: ${{ secrets.DOCKER_USERNAME }}/${{ matrix.apps }}:latest
         platforms: linux/amd64,linux/arm64
         build-args: ${{ inputs.build_args }}
 
@@ -92,7 +92,10 @@ jobs:
 
   CD:
     runs-on: self-hosted
-    needs: [CI]
+    needs: [CI, INIT]
+    strategy:
+      matrix:
+        apps: ${{ fromJson(needs.INIT.outputs.modified_apps) }}
     steps:
     - name: Git clone the repository
       uses: actions/checkout@v4
@@ -104,12 +107,12 @@ jobs:
 
     - name: Deploy
       run: |
-        sed -i "s/^name: .*/name: ${{ inputs.app_name }}/" cicd-template/Chart.yaml
+        sed -i "s/^name: .*/name: ${{ matrix.apps }}/" cicd-template/Chart.yaml
         sed -i "s/^appVersion: .*/appVersion: latest/" cicd-template/Chart.yaml
 
         helm upgrade --install --atomic \
           --create-namespace \
-          --namespace ${{ inputs.app_name }} \
+          --namespace ${{ matrix.apps }} \
           --set image.tag=latest \
-          -f ${{ inputs.app_name }}/.github/values.yaml -f ${{ inputs.app_name }}/.github/sandbox/values.yaml \
-          ${{ inputs.app_name }} cicd-template
+          -f ${{ matrix.apps }}/.github/values.yaml -f ${{ matrix.apps }}/.github/sandbox/values.yaml \
+          ${{ matrix.apps }} cicd-template
