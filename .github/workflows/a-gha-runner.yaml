@@ -19,6 +19,6 @@ permissions:
 
 jobs:
   CICD:
-    uses: ./.github/workflows/reusable/cicd.yaml
+    uses: ./.github/workflows/cicd.yaml
     with:
       app_name: gha-runner
