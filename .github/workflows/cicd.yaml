@@ -33,14 +33,14 @@ jobs:
     - name: Modified Apps
       id: modified_apps
       run: |
-        modified_apps=$(git diff HEAD HEAD~ --name-only \
+        modified_apps=($(git diff HEAD HEAD~ --name-only \
           | grep '/' \
           | cut -d'/' -f1 \
           | grep -vE '^(\.github|cicd-template)$' \
           | sort -u \
-          | xargs)
-        echo ($modified_apps)
-        echo "modified_apps=($modified_apps)" >> $GITHUB_OUTPUT
+          | xargs))
+        echo $modified_apps
+        echo "modified_apps=$modified_apps" >> $GITHUB_OUTPUT
 
   CI:
     # The type of runner that the job will run on
