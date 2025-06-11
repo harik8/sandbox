@@ -1,19 +1,5 @@
 name: CICD
 
-# on:
-#   push:
-#     branches:
-#     - main
-#     - D-*
-#     paths:
-#     - show-ip/**
-#     - .gitub/workflows/cicd.yaml
-#     - gh-runner/**
-#   pull_request:
-#     branches:
-#     - main
-#   workflow_dispatch:
-
 on:
   workflow_dispatch:
   workflow_call:
