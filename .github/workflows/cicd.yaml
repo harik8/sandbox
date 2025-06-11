@@ -6,10 +6,12 @@ on:
       app_name:
         type: string
         description: Name of the application
+        required: true
       build_args:
-        type: list
+        type: string
         description: List of build args for Docker build
-        default: [] 
+        default: ""
+        required: false
 
 jobs:
   CI:
