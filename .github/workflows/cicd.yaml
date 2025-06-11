@@ -21,6 +21,8 @@ on:
 jobs:
   INIT:
     runs-on: ubuntu-latest
+    outputs:
+      modified_apps:  ${{ steps.modified_apps.outputs.name}}
     steps:
 
     - name: Checkout repository
@@ -28,12 +30,12 @@ jobs:
       with:
         fetch-depth: 2
 
-    - name: MOdified Files
+    - name: Modified Apps
+      id: modified_apps
       run: |
-        MODIFIED_FILES=$(git diff HEAD HEAD~ --name-only)
-        echo $MODIFIED_FILES
-        PARENT_DIRS=$(echo "$MODIFIED_FILES" | grep '/' | cut -d'/' -f1 | sort -u)
-        echo $PARENT_DIRS
+        modified_apps=$(git diff HEAD HEAD~ --name-only | grep '/' | cut -d'/' -f1 | sort -u)
+        echo $modified_apps
+        echo "name=$modified_apps" >> $GITHUB_OUTPUT
 
   CI:
     # The type of runner that the job will run on
@@ -43,8 +45,6 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - name: Checkout repository
       uses: actions/checkout@v3
-      with:
-        fetch-depth: 2
 
     # Set up Docker Buildx
     - name: Set up Docker Buildx
