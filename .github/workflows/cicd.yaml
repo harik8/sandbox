@@ -39,7 +39,7 @@ jobs:
           | grep -vE '^(\.github|cicd-template)$' \
           | sort -u \
           | xargs)
-        echo $modified_apps
+        echo ($modified_apps)
         echo "modified_apps=($modified_apps)" >> $GITHUB_OUTPUT
 
   CI:
