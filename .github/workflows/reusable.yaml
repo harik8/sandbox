@@ -114,7 +114,7 @@ jobs:
   
   POST-CD:
     runs-on: self-hosted
-    needs: [CD]
+    needs: [INIT, CD]
     strategy:
       matrix:
         apps: ${{ fromJson(needs.INIT.outputs.modified_apps) }}
