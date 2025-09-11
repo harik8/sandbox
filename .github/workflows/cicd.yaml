@@ -20,7 +20,7 @@ permissions:
 jobs:
   CI:
     # The type of runner that the job will run on
-    runs-on: self-hosted
+    runs-on: ${{ vars.RUNS_ON }}
 
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
