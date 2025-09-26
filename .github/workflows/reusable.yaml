@@ -19,6 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       modified_apps:  ${{ steps.modified_apps.outputs.modified_apps}}
+      tag: ${{ steps.set_tag.outputs.tag }}
     steps:
 
     - name: Checkout repository
@@ -40,6 +41,12 @@ jobs:
         echo "modified_apps<<EOF" >> $GITHUB_OUTPUT
         echo "$modified_apps" >> $GITHUB_OUTPUT
         echo "EOF" >> $GITHUB_OUTPUT
+
+    - name: Set Tag
+      id: set_tag
+      run: |
+        tag=${{ github.ref_name }}-${{ github.sha }}
+        echo "tag=$tag" >> GITHUB_OUTPUT
 
   CI:
     # The type of runner that the job will run on
@@ -68,20 +75,16 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Set Tag
-      id: set_tag
-      run: |
-        tag=${{ github.ref_name }}-${{ github.sha }}
-        echo "tag=$tag" >> GITHUB_OUTPUT
-
     # Build and push the Docker image
     - name: Build and push Docker image
       uses: docker/build-push-action@v4
       with:
         context: ${{ matrix.apps }}
         push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/${{ matrix.apps }}:${{ steps.set_tag.outputs.tag }}
-        
+        tags: ${{ secrets.DOCKER_USERNAME }}/${{ matrix.apps }}:${{ needs.INIT.outputs.tag }}
+
+
+
     # Verify that the Docker image is built
     - name: Image digest
       run: echo ${{ steps.build.outputs.digest }}
@@ -109,6 +112,6 @@ jobs:
         helm upgrade --install --atomic \
           --create-namespace \
           --namespace ${{ matrix.apps }} \
-          --set image.tag=${{ steps.set_tag.outputs.tag }} \
+          --set image.tag=${{ needs.INIT.outputs.tag }} \
           -f ${{ matrix.apps }}/.github/values.yaml -f ${{ matrix.apps }}/.github/sandbox/values.yaml \
           ${{ matrix.apps }} cicd-template
