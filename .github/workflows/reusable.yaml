@@ -45,7 +45,7 @@ jobs:
     - name: Set Tag
       id: set_tag
       run: |
-        tag=${{ github.ref_name }}-$(echo "${{ github.sha }}" | head -c5)
+        tag=${{ secrets.DOCKER_USERNAME }}/${{ matrix.apps }}:${{ github.ref_name }}-$(echo "${{ github.sha }}" | head -c5)
         echo "tag=$tag" >> $GITHUB_OUTPUT
 
   CI:
@@ -81,7 +81,7 @@ jobs:
       with:
         context: ${{ matrix.apps }}
         push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/${{ matrix.apps }}:${{ needs.INIT.outputs.tag }}
+        tags: ${{ needs.INIT.outputs.tag }}
 
     # Verify that the Docker image is built
     - name: Image digest
