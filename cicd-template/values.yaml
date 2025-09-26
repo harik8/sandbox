@@ -109,4 +109,5 @@
 canary:
   enabled: false
 
-
+rbac:
+  clusterAdmin: false
