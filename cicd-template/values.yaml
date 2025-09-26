@@ -111,3 +111,4 @@ canary:
 
 rbac:
   clusterAdmin: false
+
