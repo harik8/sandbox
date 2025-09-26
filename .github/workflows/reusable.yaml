@@ -111,14 +111,3 @@ jobs:
           --set image.tag=latest \
           -f ${{ matrix.apps }}/.github/values.yaml -f ${{ matrix.apps }}/.github/sandbox/values.yaml \
           ${{ matrix.apps }} cicd-template
-  
-  POST-CD:
-    runs-on: self-hosted
-    needs: [INIT, CD]
-    strategy:
-      matrix:
-        apps: ${{ fromJson(needs.INIT.outputs.modified_apps) }}
-    steps:
-      - name: Post deployment
-        uses: ./.github/workflows/${{ matrix.apps }}.yaml
-
