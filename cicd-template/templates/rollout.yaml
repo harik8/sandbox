@@ -1,0 +1,41 @@
+{{- if .Values.canary.enabled -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: {{ .Chart.Name }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/version: {{ .Chart.Version }}
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "Chart.Name.selectorLabels" . | nindent 6 }}
+  workloadRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ .Release.Name }}
+    scaleDown: onsuccess
+  strategy:
+    canary:
+      stableService: {{ .Release.Name }}
+      canaryService: {{ .Release.Name }}-canary
+      steps:
+        - setWeight: 10
+        - pause: { }
+        - setWeight: 50
+        - pause: { duration: 1m }
+        - setWeight: 100
+      trafficRouting:
+        nginx:
+          stableIngress: {{ .Release.Name }}
+          additionalIngressAnnotations:
+            canary-by-header: FLAG
+            canary-by-header-value: "true"
+            canary-weight: "0"
+  rollbackWindow:
+    revisions: 2
+{{- end }}
