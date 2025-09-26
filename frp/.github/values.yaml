@@ -5,10 +5,7 @@
 replicaCount: 2
 
 image:
-  repository: harik8/frp
   pullPolicy: Always
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
 
 imagePullSecrets: []
 nameOverride: ""
