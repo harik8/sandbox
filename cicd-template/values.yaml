@@ -105,3 +105,8 @@
 # tolerations: []
 
 # affinity: {}
+
+canary:
+  enabled: false
+
+

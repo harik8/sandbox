@@ -115,5 +115,5 @@ jobs:
           --create-namespace \
           --namespace ${{ matrix.apps }} \
           --set image.tag=${{ needs.INIT.outputs.tag }} \
-          -f ${{ matrix.apps }}/.github/values.yaml -f ${{ matrix.apps }}/.github/sandbox/values.yaml \
+          -f cicd-template/values.yaml -f ${{ matrix.apps }}/.github/values.yaml -f ${{ matrix.apps }}/.github/sandbox/values.yaml \
           ${{ matrix.apps }} cicd-template
