@@ -46,7 +46,7 @@ jobs:
       id: set_tag
       run: |
         tag=${{ github.ref_name }}-${{ github.sha }}
-        echo "tag=$tag" >> GITHUB_OUTPUT
+        echo "tag=$tag" >> $GITHUB_OUTPUT
 
   CI:
     # The type of runner that the job will run on
