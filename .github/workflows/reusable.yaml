@@ -45,7 +45,7 @@ jobs:
     - name: Set Tag
       id: set_tag
       run: |
-        tag=${{ github.ref_name }}-${{ substring(github.sha, 0, 5) }}
+        tag=${{ github.ref_name }}-$(echo "${{ github.sha }}" | head -c5)
         echo "tag=$tag" >> $GITHUB_OUTPUT
 
   CI:
