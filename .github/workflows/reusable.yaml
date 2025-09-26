@@ -78,7 +78,7 @@ jobs:
       with:
         context: ${{ matrix.apps }}
         push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/${{ matrix.apps }}:${{ github.head_ref }}-${{ github.sha }}
+        tags: ${{ secrets.DOCKER_USERNAME }}/${{ matrix.apps }}:${{ github.ref_name }}-${{ github.sha }}
         platforms: linux/amd64,linux/arm64
 
     # Verify that the Docker image is built
@@ -108,6 +108,6 @@ jobs:
         helm upgrade --install --atomic \
           --create-namespace \
           --namespace ${{ matrix.apps }} \
-          --set image.tag=${{ github.head_ref }}-${{ github.sha }} \
+          --set image.tag=${{ github.ref_name }}-${{ github.sha }} \
           -f ${{ matrix.apps }}/.github/values.yaml -f ${{ matrix.apps }}/.github/sandbox/values.yaml \
           ${{ matrix.apps }} cicd-template
