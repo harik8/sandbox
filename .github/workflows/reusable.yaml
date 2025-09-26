@@ -74,9 +74,10 @@ jobs:
     - name: Set Tag
       id: set_tag
       run: |
+        repository=${{ secrets.DOCKER_USERNAME }}/${{ matrix.apps }}
         tag=${{ github.ref_name }}-$(echo "${{ github.sha }}" | head -c5)
 
-        echo "repository=${{ secrets.DOCKER_USERNAME }}/${{ matrix.apps }}" >> $GITHUB_OUTPUT
+        echo "repository=$repository" >> $GITHUB_OUTPUT
         echo "tag=$tag" >> $GITHUB_OUTPUT
 
     # Build and push the Docker image
