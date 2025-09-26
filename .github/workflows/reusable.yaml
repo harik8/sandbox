@@ -86,7 +86,7 @@ jobs:
       with:
         context: ${{ matrix.apps }}
         push: true
-        tags: ${{ steps.set_tag.outputs.repository }}:${{ steps.set_tag.outputs.tag }}
+        tags: ${{ secrets.DOCKER_USERNAME }}/${{ matrix.apps }}:${{ steps.set_tag.outputs.tag }}
 
     # Verify that the Docker image is built
     - name: Image digest
@@ -115,7 +115,7 @@ jobs:
         helm upgrade --install --atomic \
           --create-namespace \
           --namespace ${{ matrix.apps }} \
-          --set image.repository=${{ needs.CI.outputs.repository }} \
+          --set image.repository=${{ secrets.DOCKER_USERNAME }}/${{ matrix.apps }} \
           --set image.tag=${{ needs.CI.outputs.tag }} \
           -f cicd-template/values.yaml -f ${{ matrix.apps }}/.github/values.yaml -f ${{ matrix.apps }}/.github/sandbox/values.yaml \
           ${{ matrix.apps }} cicd-template
