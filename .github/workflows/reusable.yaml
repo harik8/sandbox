@@ -81,6 +81,7 @@ jobs:
         context: ${{ matrix.apps }}
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/${{ matrix.apps }}:${{ steps.set_tag.outputs.tag }}
+        
     # Verify that the Docker image is built
     - name: Image digest
       run: echo ${{ steps.build.outputs.digest }}
