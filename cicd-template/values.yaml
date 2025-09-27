@@ -105,3 +105,10 @@
 # tolerations: []
 
 # affinity: {}
+
+canary:
+  enabled: false
+
+rbac:
+  clusterAdmin: false
+
