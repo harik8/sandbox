@@ -76,7 +76,12 @@ jobs:
       id: set_tag
       run: |
         repository=${{ secrets.DOCKER_USERNAME }}/${{ matrix.apps }}
-        tag=${{ github.head_ref }}-$(echo "${{ github.event.pull_request.head.sha }}" | head -c5)
+        
+        if [ "${{ github.event_name }}" = "pull_request" ]; then
+          tag=${{ github.head_ref }}-$(echo "${{ github.event.pull_request.head.sha }}" | head -c5)
+        else
+          tag=${{ github.ref_name }}-$(echo "${{ github.sha }}" | head -c5)
+        fi
 
         echo "repository=$repository" >> $GITHUB_OUTPUT
         echo "tag=$tag" >> $GITHUB_OUTPUT
