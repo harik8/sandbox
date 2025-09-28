@@ -119,5 +119,5 @@ jobs:
           --namespace ${{ matrix.apps }} \
           --set image.repository=${{ secrets.DOCKER_USERNAME }}/${{ matrix.apps }} \
           --set image.tag=${{ needs.CI.outputs.tag }} \
-          -f .helm-tmpl/values.yaml -f ${{ matrix.apps }}/.github/values.yaml -f ${{ matrix.apps }}/.github/sandbox/values.yaml \
+          -f .helm-tmpl/values.yaml -f ${{ matrix.apps }}/.helm/values.yaml -f ${{ matrix.apps }}/.helm/local/values.yaml \
           ${{ matrix.apps }} .helm-tmpl
