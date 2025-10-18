@@ -1,2 +1,3 @@
-# services
-Repository contains source code of the services
+# SANDBOX
+
+Sandbox is my playground setup running locally on Kubernetes, powered by MicroK8s.    
