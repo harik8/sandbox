@@ -32,7 +32,7 @@ jobs:
         modified_apps=$(git diff HEAD HEAD~ --name-only \
           | grep '/' \
           | cut -d'/' -f1 \
-          | grep -vE '^(\.github|\.helm-tmpl|cicd-template)$' \
+          | grep -vE '^(\.github|\.helm-tmpl|cicd-template|frp)$' \
           | sort -u \
           | jq -R . | jq -s .)
         echo $modified_apps
@@ -91,7 +91,7 @@ jobs:
       uses: docker/build-push-action@v4
       with:
         context: ${{ matrix.apps }}
-        platforms: linux/arm64
+        platforms: linux/amd64
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/${{ matrix.apps }}:${{ steps.set_tag.outputs.tag }}
 
