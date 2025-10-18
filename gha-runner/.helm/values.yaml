@@ -32,12 +32,6 @@ podSecurityContext: {}
   # fsGroup: 2000
 
 securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
 
 service:
   type: ClusterIP
@@ -62,17 +56,6 @@ resources:
   requests:
     cpu: 50m
     memory: 64Mi
-
-# livenessProbe:
-#   httpGet:
-#     path: /
-#     port: http
-# readinessProbe:
-#   exec:
-#     command:
-#       - /bin/sh
-#       - -c
-#       - sed -i "s/\$HOSTNAME/$HOSTNAME/g; s/\$IP_ADDR/$IP_ADDR/g" /usr/share/nginx/html/index.html
 
 autoscaling:
   enabled: false
@@ -102,7 +85,3 @@ rbac:
 env:
   - name: REPO_URL
     value: https://github.com/harik8/services
-  - name: RUNNER_TOKEN
-    value: AB52EUO4DRFH7YYB6QZNFSTIJHLCU
-  - name: TEST
-    value: test1
