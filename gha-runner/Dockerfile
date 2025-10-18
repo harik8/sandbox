@@ -30,7 +30,7 @@ WORKDIR /actions-runner
 # Download and extract runner
 RUN curl -o actions-runner-linux-${RUNNER_ARCH}-${RUNNER_VERSION}.tar.gz -L \
     https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-${RUNNER_ARCH}-${RUNNER_VERSION}.tar.gz && \
-    echo "${RUNNER_HASH} actions-runner-linux-${RUNNER_ARCH}-${RUNNER_VERSION}.tar.gz" | shasum -a 256 -c && \
+    echo "56768348b3d643a6a29d4ad71e9bdae0dc0ef1eb01afe0f7a8ee097b039bfaaf actions-runner-linux-${RUNNER_ARCH}-${RUNNER_VERSION}.tar.gz" | shasum -a 256 -c && \
     tar xzf ./actions-runner-linux-${RUNNER_ARCH}-${RUNNER_VERSION}.tar.gz && \
     rm actions-runner-linux-${RUNNER_ARCH}-${RUNNER_VERSION}.tar.gz
 
