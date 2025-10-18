@@ -91,6 +91,7 @@ jobs:
       uses: docker/build-push-action@v4
       with:
         context: ${{ matrix.apps }}
+        platforms: linux/arm64
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/${{ matrix.apps }}:${{ steps.set_tag.outputs.tag }}
 
