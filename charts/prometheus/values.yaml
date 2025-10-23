@@ -1,0 +1,14 @@
+server:
+  ingress:
+    enabled: true
+    ingressClassName: "public"
+    hosts:
+      - prometheus.sb
+    path: /
+    pathType: Prefix
+
+# helm upgrade --install --atomic \
+# 	--create-namespace \
+# 	--namespace prometheus \
+#   --values values.yaml \
+# 	prometheus prometheus-community/prometheus

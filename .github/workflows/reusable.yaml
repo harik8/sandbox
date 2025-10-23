@@ -32,7 +32,7 @@ jobs:
         modified_apps=$(git diff HEAD HEAD~ --name-only \
           | grep '/' \
           | cut -d'/' -f1 \
-          | grep -vE '^(\.github|\.helm-tmpl|\.bash)$' \
+          | grep -vE '^(\.github|\.helm-tmpl|\.bash|charts)$' \
           | sort -u \
           | jq -R . | jq -s .)
         echo $modified_apps

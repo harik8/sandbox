@@ -1,0 +1,31 @@
+---
+initChownData:
+  enabled: false
+datasources: 
+ datasources.yaml:
+   apiVersion: 1
+   datasources:
+   - name: Prometheus
+     type: prometheus
+     url: http://prometheus-server.prometheus.svc.cluster.local.
+     isDefault: true
+   - name: Loki
+     type: loki
+     url: http://loki-gateway.loki.svc.cluster.local.
+     isDefault: false
+     
+persistence:
+  type: pvc
+  enabled: false
+ingress:
+  enabled: true
+  ingressClassName: public
+  hosts:
+    - grafana.sb
+
+# helm repo add grafana https://grafana.github.io/helm-charts
+# helm upgrade --install --atomic \
+# 	--create-namespace \
+# 	--namespace grafana \
+# 	--values value.yaml \
+# 	grafana grafana/grafana

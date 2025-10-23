@@ -22,7 +22,6 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-podAnnotations: {}
 podLabels: {}
 
 podSecurityContext: {}
@@ -47,7 +46,7 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: show-ip.forexample.link
+    - host: show-ip.sb
       paths:
         - path: /
           pathType: ImplementationSpecific

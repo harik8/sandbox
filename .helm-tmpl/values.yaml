@@ -25,7 +25,12 @@
 #   # If not set and create is true, a name is generated using the fullname template
 #   name: ""
 
-# podAnnotations: {}
+podAnnotations:
+  prometheus.io/scrape: "true"
+
+sidecar:
+  enabled: false
+
 # podLabels: {}
 
 # podSecurityContext: {}

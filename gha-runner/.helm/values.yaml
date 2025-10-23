@@ -85,3 +85,14 @@ rbac:
 env:
   - name: REPO_URL
     value: https://github.com/harik8/services
+
+# export RUNNER_TOKEN=A****************
+# helm upgrade --install --atomic \
+# 	--create-namespace \
+# 	--namespace gha-runner \
+# 	gha-runner .helm-tmpl \
+# 	--set image.tag=main-86127 -f gha-runner/.helm/values.yaml -f gha-runner/.helm/local/values.yaml \
+# 	--set env[0].name=REPO_URL \
+# 	--set env[0].value=https://github.com/harik8/sandbox \
+# 	--set env[1].name=RUNNER_TOKEN \
+# 	--set env[1].value=$RUNNER_TOKEN

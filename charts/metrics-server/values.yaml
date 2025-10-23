@@ -1,0 +1,5 @@
+---
+# helm upgrade --install --atomic \
+# 	--create-namespace \
+# 	--namespace metrics-server \
+# 	metrics-server metrics-server/metrics-server
