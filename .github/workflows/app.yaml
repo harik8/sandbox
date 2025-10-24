@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   CICD:
-    uses: ./.github/workflows/reusable.yaml
+    uses: ./.github/workflows/app-workflow.yaml
     secrets:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}

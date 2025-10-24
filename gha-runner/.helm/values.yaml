@@ -84,4 +84,6 @@ rbac:
 
 env:
   - name: REPO_URL
-    value: https://github.com/harik8/services
+    value: https://github.com/harik8/sandbox
+  - name: RUNNER_TOKEN
+    value: ""
