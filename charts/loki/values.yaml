@@ -20,8 +20,14 @@ loki:
   ruler:
     enable_api: true
 
-minio:
+
+memcached:
   enabled: false
+chunksCache:
+  enabled: false
+
+minio:
+  enabled: true
 
 deploymentMode: SingleBinary
 
@@ -55,8 +61,4 @@ bloomCompactor:
 bloomGateway:
   replicas: 0
 
-# helm upgrade --install --atomic \
-# 	--create-namespace \
-# 	--namespace loki \
-# 	--values values.yaml \
-# 	loki grafana/loki
+# helm upgrade --install --atomic --create-namespace --namespace loki --version 6.43.0 --values values.yaml loki grafana/loki

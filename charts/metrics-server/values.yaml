@@ -1,5 +1,2 @@
 ---
-# helm upgrade --install --atomic \
-# 	--create-namespace \
-# 	--namespace metrics-server \
-# 	metrics-server metrics-server/metrics-server
+# helm upgrade --install --atomic --create-namespace --namespace metrics-server --version 3.12.2 --values values.yaml metrics-server metrics-server/metrics-server

@@ -85,6 +85,8 @@ rbac:
 env:
   - name: REPO_URL
     value: https://github.com/harik8/services
+  - name: RUNNER_TOKEN
+    value: ""
 
 # export RUNNER_TOKEN=A****************
 # helm upgrade --install --atomic \

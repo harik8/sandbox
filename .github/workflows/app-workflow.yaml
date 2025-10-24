@@ -1,4 +1,4 @@
-name: Reusable Workflow
+name: App Workflow
 
 on:
   workflow_call:
@@ -118,7 +118,7 @@ jobs:
       if: ${{ matrix.apps != 'gha-runner' }}
       run: |
         sed -i "s/^name: .*/name: ${{ matrix.apps }}/" .helm-tmpl/Chart.yaml
-        sed -i "s/^appVersion: .*/appVersion: latest/" .helm-tmpl/Chart.yaml
+        sed -i "s/^appVersion: .*/appVersion: ${{ needs.CI.outputs.tag }}/" .helm-tmpl/Chart.yaml
 
         helm upgrade --install --atomic \
           --create-namespace \

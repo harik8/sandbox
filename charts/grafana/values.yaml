@@ -23,9 +23,4 @@ ingress:
   hosts:
     - grafana.sb
 
-# helm repo add grafana https://grafana.github.io/helm-charts
-# helm upgrade --install --atomic \
-# 	--create-namespace \
-# 	--namespace grafana \
-# 	--values value.yaml \
-# 	grafana grafana/grafana
+# helm upgrade --install --atomic --create-namespace --namespace grafana --version 10.1.2 --values value.yaml grafana grafana/grafana

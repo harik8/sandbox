@@ -23,4 +23,4 @@ resources:
   limits:
     memory: 256Mi
 
-# helm upgrade --install --atomic kafka bitnami/kafka --namespace kafka --create-namespace --values values.yaml
+# helm upgrade --install --atomic --create-namespace --namespace kafka --version 32.2.8 --values values.yaml kafka bitnami/kafka
