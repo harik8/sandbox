@@ -4,4 +4,4 @@ WORKDIR /usr/share/nginx/html
 
 COPY src/index.html .
 
-COPY src/stub_status.conf /etc/nginx/conf.d/stub_status.conf
+COPY src/stub_status.html /etc/nginx/html/stub_status.html
