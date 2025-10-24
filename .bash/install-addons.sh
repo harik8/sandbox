@@ -38,6 +38,7 @@ echo "Installing prometheus..."
 helm upgrade --install --atomic --create-namespace --namespace prometheus --version 27.41.1 --values prometheus/values.yaml prometheus prometheus-community/prometheus
 
 if [ $RUNNER_TOKEN ]; then
+  cd ..
   echo "Installing gha-runner..."
   helm upgrade --install --atomic \
     --create-namespace \
