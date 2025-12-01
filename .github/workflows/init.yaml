@@ -17,7 +17,7 @@ jobs:
   INIT:
     runs-on: ubuntu-latest
     outputs:
-      paths_modified:  ${{ steps.modified_apps.outputs.modified_apps}}
+      paths_modified:  ${{ steps.paths_modified.outputs.paths_modified }}
 
     steps:
     - name: Checkout repository
