@@ -14,11 +14,11 @@ permissions:
 
 jobs:
   INIT:
-    uses: ./.github/workflows/reusable/init.yaml
+    uses: ./.github/workflows/init.yaml
 
   CI:
     needs: INIT
-    uses: ./.github/workflows/reusable/ci.yaml
+    uses: ./.github/workflows/ci.yaml
     with:
       modified_apps: ${{ needs.INIT.outputs.modified_apps }}
     secrets:
@@ -27,7 +27,7 @@ jobs:
 
   CD:
     needs: [INIT, CI]
-    uses: ./.github/workflows/reusable/cd.yaml
+    uses: ./.github/workflows/cd.yaml
     with:
       modified_apps: ${{ needs.INIT.outputs.modified_apps }}
     secrets:
