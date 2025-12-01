@@ -25,7 +25,7 @@ jobs:
       with:
         fetch-depth: 2
 
-    - name: Modified Apps
+    - name: Paths Modified
       id: paths_modified
       run: |
         paths_modified=$(git diff HEAD HEAD~ --name-only \
