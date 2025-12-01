@@ -3,21 +3,21 @@ name: INIT
 on:
   workflow_call:
     inputs:
-      ignore_changes:
+      paths_ignore:
         type: string
         description: List of folders or files to ignore changes
         default: '^(\.github|\.helm-tmpl|\.bash|charts)$'
         required: false
     outputs:
-      modified_apps:
+      paths_modified:
         description: List of modified apps
-        value: ${{ jobs.INIT.outputs.modified_apps }}
+        value: ${{ jobs.INIT.outputs.paths_modified }}
 
 jobs:
   INIT:
     runs-on: ubuntu-latest
     outputs:
-      modified_apps:  ${{ steps.modified_apps.outputs.modified_apps}}
+      paths_modified:  ${{ steps.modified_apps.outputs.modified_apps}}
 
     steps:
     - name: Checkout repository
@@ -26,16 +26,16 @@ jobs:
         fetch-depth: 2
 
     - name: Modified Apps
-      id: modified_apps
+      id: paths_modified
       run: |
-        modified_apps=$(git diff HEAD HEAD~ --name-only \
+        paths_modified=$(git diff HEAD HEAD~ --name-only \
           | grep '/' \
           | cut -d'/' -f1 \
-          | grep -vE '${{ inputs.ignore_changes }}' \
+          | grep -vE '${{ inputs.paths_ignore }}' \
           | sort -u \
           | jq -R . | jq -s .)
-        echo $modified_apps
+        echo $paths_modified
 
-        echo "modified_apps<<EOF" >> $GITHUB_OUTPUT
-        echo "$modified_apps" >> $GITHUB_OUTPUT
+        echo "paths_modified<<EOF" >> $GITHUB_OUTPUT
+        echo "$paths_modified" >> $GITHUB_OUTPUT
         echo "EOF" >> $GITHUB_OUTPUT

@@ -3,13 +3,13 @@ name: App Workflow
 on:
   workflow_call:
     inputs:
-      modified_apps:
+      paths_modified:
         type: string
         description: List of modified apps
       skip_cd:
         type: string
         description: Apps to skip continuous deployment
-        default: "[]"
+        default: "gha-runner"
         required: false
       tag:
         type: string
@@ -26,7 +26,7 @@ jobs:
     runs-on: self-hosted
     strategy:
       matrix:
-        apps: ${{ fromJson(inputs.modified_apps) }}
+        apps: ${{ fromJson(inputs.paths_modified) }}
     steps:
     - name: Git clone the repository
       uses: actions/checkout@v4
@@ -37,7 +37,7 @@ jobs:
         version: 'latest'
 
     - name: Deploy
-      if: ${{ matrix.apps != 'gha-runner' }}
+      if: ${{ matrix.apps != ${{ inputs.skip_cd }} }}
       run: |
         sed -i "s/^name: .*/name: ${{ matrix.apps }}/" .helm-tmpl/Chart.yaml
         sed -i "s/^appVersion: .*/appVersion: ${{ needs.CI.outputs.tag }}/" .helm-tmpl/Chart.yaml
