@@ -18,6 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       modified_apps:  ${{ steps.modified_apps.outputs.modified_apps}}
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -30,7 +31,7 @@ jobs:
         modified_apps=$(git diff HEAD HEAD~ --name-only \
           | grep '/' \
           | cut -d'/' -f1 \
-          | grep -vE {{ inputs.ignore_changes }} \
+          | grep -vE ${{ inputs.ignore_changes }} \
           | sort -u \
           | jq -R . | jq -s .)
         echo $modified_apps
