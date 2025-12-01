@@ -11,6 +11,10 @@ on:
         description: Apps to skip continuous deployment
         default: "[]"
         required: false
+      tag:
+        type: string
+        description: Docker image tag
+        required: true
     secrets:
       DOCKER_USERNAME:
         required: true
@@ -42,6 +46,6 @@ jobs:
           --create-namespace \
           --namespace ${{ matrix.apps }} \
           --set image.repository=${{ secrets.DOCKER_USERNAME }}/${{ matrix.apps }} \
-          --set image.tag=${{ needs.CI.outputs.tag }} \
+          --set image.tag=${{ inputs.tag }} \
           -f .helm-tmpl/values.yaml -f ${{ matrix.apps }}/.helm/values.yaml -f ${{ matrix.apps }}/.helm/sandbox/values.yaml \
           ${{ matrix.apps }} .helm-tmpl

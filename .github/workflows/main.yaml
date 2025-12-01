@@ -30,6 +30,7 @@ jobs:
     uses: ./.github/workflows/cd.yaml
     with:
       modified_apps: ${{ needs.INIT.outputs.modified_apps }}
+      tag: ${{ needs.CI.outputs.tag }}
     secrets:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}

@@ -12,6 +12,10 @@ on:
         type: string
         description: List of modified apps
         required: true
+    outputs:
+      tag:
+        description: Docker image tag
+        value: ${{ jobs.CI.outputs.tag }}
     secrets:
       DOCKER_USERNAME:
         required: true
@@ -24,7 +28,6 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ inputs.modified_apps != '[]' }}
     outputs:
-      repository: ${{ steps.set_tag.outputs.repository }}
       tag: ${{ steps.set_tag.outputs.tag }}
     strategy:
       matrix:
@@ -60,7 +63,6 @@ jobs:
           tag=${{ github.ref_name }}-$(echo "${{ github.sha }}" | head -c5)
         fi
 
-        echo "repository=$repository" >> $GITHUB_OUTPUT
         echo "tag=$tag" >> $GITHUB_OUTPUT
 
     # Build and push the Docker image
