@@ -11,7 +11,7 @@ on:
     outputs:
       modified_apps:
         description: List of modified apps
-        value: ${{ steps.modified_apps.outputs.modified_apps }}
+        value: ${{ jobs.INIT.outputs.modified_apps }}
 
 jobs:
   INIT:
