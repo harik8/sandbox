@@ -1,0 +1,40 @@
+name: INIT
+
+on:
+  workflow_call:
+    inputs:
+      ignore_changes:
+        type: string
+        description: List of folders or files to ignore changes
+        default: '^(\.github|\.helm-tmpl|\.bash|charts)$'
+        required: false
+    outputs:
+      modified_apps:
+        description: List of modified apps
+        value: ${{ steps.modified_apps.outputs.modified_apps }}
+
+jobs:
+  INIT:
+    runs-on: ubuntu-latest
+    outputs:
+      modified_apps:  ${{ steps.modified_apps.outputs.modified_apps}}
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 2
+
+    - name: Modified Apps
+      id: modified_apps
+      run: |
+        modified_apps=$(git diff HEAD HEAD~ --name-only \
+          | grep '/' \
+          | cut -d'/' -f1 \
+          | grep -vE {{ inputs.ignore_changes }} \
+          | sort -u \
+          | jq -R . | jq -s .)
+        echo $modified_apps
+
+        echo "modified_apps<<EOF" >> $GITHUB_OUTPUT
+        echo "$modified_apps" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT

@@ -1,0 +1,35 @@
+name: CICD
+
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+    branches:
+    - main
+
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read  # This is required for actions/checkout
+
+jobs:
+  INIT:
+    uses: ./.github/workflows/reusable/init.yaml
+
+  CI:
+    needs: INIT
+    uses: ./.github/workflows/reusable/ci.yaml
+    with:
+      modified_apps: ${{ needs.INIT.outputs.modified_apps }}
+    secrets:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+  CD:
+    needs: [INIT, CI]
+    uses: ./.github/workflows/reusable/cd.yaml
+    with:
+      modified_apps: ${{ needs.INIT.outputs.modified_apps }}
+    secrets:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
