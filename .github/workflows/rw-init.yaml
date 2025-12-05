@@ -6,7 +6,7 @@ on:
       paths_ignore:
         type: string
         description: List of folders or files to ignore changes
-        default: '^(\.github|\.helm-tmpl|\.bash|charts)$'
+        default: '^(\.github|\.helm-tmpl|\.bash|charts|show-ip)$'
         required: false
     outputs:
       paths_modified:
