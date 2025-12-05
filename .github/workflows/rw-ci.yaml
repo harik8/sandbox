@@ -12,6 +12,11 @@ on:
         type: string
         description: List of modified apps
         required: true
+      tag_latest:
+        type: boolean
+        description: Whether to tag the image as 'latest'
+        default: false
+        required: false
     outputs:
       tags:
         description: Docker image tags
@@ -60,9 +65,11 @@ jobs:
         if [ "${{ github.event_name }}" = "pull_request" ]; then
           tag=${{ github.head_ref }}-$(echo "${{ github.event.pull_request.head.sha }}" | head -c5)
           tags="$repository:$tag"
+        elif [ "${{ inputs.tag_latest }}" = "true" ]; then
+          tags="$repository:latest"
         else
           tag=${{ github.ref_name }}-$(echo "${{ github.sha }}" | head -c5)
-          tags="$repository:$tag, $repository:latest"
+          tags="$repository:$tag"
         fi
 
         echo "tags=$tags" >> $GITHUB_OUTPUT
