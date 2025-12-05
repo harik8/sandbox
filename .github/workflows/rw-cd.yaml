@@ -18,8 +18,6 @@ on:
     secrets:
       DOCKER_USERNAME:
         required: true
-      DOCKER_PASSWORD:
-        required: true
         
 jobs:
   CD:
@@ -40,7 +38,7 @@ jobs:
       if: ${{ matrix.apps != inputs.skip_cd }}
       run: |
         sed -i "s/^name: .*/name: ${{ matrix.apps }}/" .helm-tmpl/Chart.yaml
-        sed -i "s/^appVersion: .*/appVersion: ${{ needs.CI.outputs.tag }}/" .helm-tmpl/Chart.yaml
+        sed -i "s/^appVersion: .*/appVersion: ${{ inputs.tag }}/" .helm-tmpl/Chart.yaml
 
         helm upgrade --install --atomic \
           --create-namespace \

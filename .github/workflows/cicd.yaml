@@ -33,4 +33,3 @@ jobs:
       tag: ${{ needs.CI.outputs.tag }}
     secrets:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
