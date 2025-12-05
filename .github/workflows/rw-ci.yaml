@@ -52,20 +52,20 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Set Tags
-      id: set_tags
+    - name: Set Tag
+      id: set_tag
       run: |
         repository=${{ secrets.DOCKER_USERNAME }}/${{ matrix.apps }}
         
         if [ "${{ github.event_name }}" = "pull_request" ]; then
           tag=${{ github.head_ref }}-$(echo "${{ github.event.pull_request.head.sha }}" | head -c5)
-          tags="$repository:$tag"
+          image="$repository:$tag"
         else
           tag=${{ github.ref_name }}-$(echo "${{ github.sha }}" | head -c5)
-          tags="$repository:$tag, $repository:latest"
+          image="$repository:$tag"
         fi
 
-        echo "tags=$tags" >> $GITHUB_OUTPUT
+        echo "tag=$image" >> $GITHUB_OUTPUT
 
     # Build and push the Docker image
     - name: Build and push Docker image
@@ -74,7 +74,7 @@ jobs:
         context: ${{ matrix.apps }}
         platforms: linux/amd64
         push: true
-        tags: ${{ steps.set_tags.outputs.tags }}
+        tags: ${{ steps.set_tags.outputs.tag }}
 
     # Verify that the Docker image is built
     - name: Image digest
