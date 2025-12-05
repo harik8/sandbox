@@ -11,7 +11,7 @@ on:
       monorepo:
         type: boolean
         description: Whether the repo is a monorepo
-        default: true
+        default: false
         required: false
       paths_modified:
         type: string
