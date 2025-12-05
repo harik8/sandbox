@@ -59,13 +59,13 @@ jobs:
         
         if [ "${{ github.event_name }}" = "pull_request" ]; then
           tag=${{ github.head_ref }}-$(echo "${{ github.event.pull_request.head.sha }}" | head -c5)
-          image="$repository:$tag"
+          # image="$repository:$tag"
         else
           tag=${{ github.ref_name }}-$(echo "${{ github.sha }}" | head -c5)
-          image="$repository:$tag"
+          # image="$repository:$tag"
         fi
 
-        echo "tag=$image" >> $GITHUB_OUTPUT
+        echo "tag=$tag" >> $GITHUB_OUTPUT
 
     # Build and push the Docker image
     - name: Build and push Docker image
