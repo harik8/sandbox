@@ -42,6 +42,7 @@ jobs:
         sed -i "s/^name: .*/name: ${{ matrix.apps }}/" .helm-tmpl/Chart.yaml
         sed -i "s/^appVersion: .*/appVersion: ${{ needs.CI.outputs.tags }}/" .helm-tmpl/Chart.yaml
 
+        echo "Deploying ${{ matrix.apps }} with image tag ${{ needs.CI.outputs.tags }}"
         echo "Deploying ${{ matrix.apps }} with image tag ${{ inputs.tags }}"
 
         helm upgrade --install --atomic \
