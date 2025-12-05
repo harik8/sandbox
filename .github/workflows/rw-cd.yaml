@@ -11,9 +11,9 @@ on:
         description: Apps to skip continuous deployment
         default: gha-runner
         required: false
-      tag:
+      tags:
         type: string
-        description: Docker image tag
+        description: Docker image tags
         required: true
     secrets:
       DOCKER_USERNAME:
@@ -40,12 +40,12 @@ jobs:
       if: ${{ matrix.apps != inputs.skip_cd }}
       run: |
         sed -i "s/^name: .*/name: ${{ matrix.apps }}/" .helm-tmpl/Chart.yaml
-        sed -i "s/^appVersion: .*/appVersion: ${{ needs.CI.outputs.tag }}/" .helm-tmpl/Chart.yaml
+        sed -i "s/^appVersion: .*/appVersion: ${{ needs.CI.outputs.tags }}/" .helm-tmpl/Chart.yaml
 
         helm upgrade --install --atomic \
           --create-namespace \
           --namespace ${{ matrix.apps }} \
           --set image.repository=${{ secrets.DOCKER_USERNAME }}/${{ matrix.apps }} \
-          --set image.tag=${{ inputs.tag }} \
+          --set image.tag=${{ inputs.tags }} \
           -f .helm-tmpl/values.yaml -f ${{ matrix.apps }}/.helm/values.yaml -f ${{ matrix.apps }}/.helm/sandbox/values.yaml \
           ${{ matrix.apps }} .helm-tmpl
