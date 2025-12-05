@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ inputs.paths_modified != '[]' }}
     outputs:
-      tag: ${{ steps.set_tags.outputs.tags }}
+      tags: ${{ steps.set_tags.outputs.tags }}
     strategy:
       matrix:
         apps: ${{ fromJson(inputs.paths_modified) }}
