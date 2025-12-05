@@ -12,6 +12,11 @@ on:
         type: string
         description: List of modified apps
         required: true
+      tag_latest:
+        type: boolean
+        description: Whether to tag the image as latest for main branch
+        default: false
+        required: false
     outputs:
       tag:
         description: Docker image tag
@@ -54,15 +59,13 @@ jobs:
 
     - name: Set Tag
       id: set_tag
-      run: |
-        repository=${{ secrets.DOCKER_USERNAME }}/${{ matrix.apps }}
-        
+      run: |        
         if [ "${{ github.event_name }}" = "pull_request" ]; then
           tag=${{ github.head_ref }}-$(echo "${{ github.event.pull_request.head.sha }}" | head -c5)
-          # image="$repository:$tag"
+        elif [ "${{ inputs.tag_latest }}" = "true" ]; then
+          tag=latest
         else
           tag=${{ github.ref_name }}-$(echo "${{ github.sha }}" | head -c5)
-          # image="$repository:$tag"
         fi
 
         echo "tag=$tag" >> $GITHUB_OUTPUT
