@@ -1,4 +1,4 @@
-name: App Workflow
+name: CD
 
 on:
   workflow_call:
