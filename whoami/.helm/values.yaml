@@ -50,7 +50,7 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: show-ip.sb
+    - host: whoami.sb
       paths:
         - path: /
           pathType: ImplementationSpecific
