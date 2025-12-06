@@ -26,8 +26,8 @@ on:
       tag:
         description: Docker image tag
         value: ${{ jobs.CI.outputs.tag }}
-    secrets:
-      inherit: true
+    # secrets:
+    #   inherit: true
         
 jobs:
   CI:
