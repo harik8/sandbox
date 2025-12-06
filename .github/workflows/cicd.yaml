@@ -25,8 +25,9 @@ jobs:
       monorepo: true
       paths_modified: ${{ needs.INIT.outputs.paths_modified }}
     secrets:
-      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      # DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      # DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      inherit: true
 
   CD:
     needs: [INIT, CI]
@@ -35,4 +36,5 @@ jobs:
       paths_modified: ${{ needs.INIT.outputs.paths_modified }}
       tag: ${{ needs.CI.outputs.tag }}
     secrets:
-      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      # DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      inherit: true
