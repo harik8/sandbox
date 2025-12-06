@@ -8,6 +8,11 @@ on:
         description: List of build args for Docker build
         default: ""
         required: false
+      monorepo:
+        type: boolean
+        description: Whether the repo is a monorepo
+        default: false
+        required: false
       paths_modified:
         type: string
         description: List of modified apps
@@ -57,6 +62,17 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
+    - name: Set Build Context
+      id: set_build_context
+      run: |        
+        if [ "${{ inputs.monorepo }}" = "true" ]; then
+          build_context=${{ matrix.apps }}
+        else
+          build_context=.
+        fi
+
+        echo "build_context=$build_context" >> $GITHUB_OUTPUT
+
     - name: Set Tag
       id: set_tag
       run: |        
@@ -74,7 +90,7 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v4
       with:
-        context: ${{ matrix.apps }}
+        context: ${{ steps.set_build_context.outputs.build_context }}
         platforms: linux/amd64
         push: true
         tags:  ${{ secrets.DOCKER_USERNAME }}/${{ matrix.apps }}:${{ steps.set_tag.outputs.tag }}
