@@ -17,7 +17,7 @@ on:
         type: string
         description: List of modified apps
         default: '[${{ github.event.repository.name }}]' 
-        required: true
+        required: false
       tag_latest:
         type: boolean
         description: Whether to tag the image as latest for main branch
