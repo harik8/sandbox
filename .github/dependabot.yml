@@ -1,0 +1,22 @@
+---
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/.github/workflows"
+    schedule:
+      interval: "daily"
+    labels:
+      - "github-actions"
+      - "ci-skippush"
+  - package-ecosystem: "docker"
+    directory: "/apps/whoami"
+    schedule:
+      interval: "daily"
+    labels:
+      - "ci-skippush"
+  - package-ecosystem: "docker"
+    directory: "/gha-runner"
+    schedule:
+      interval: "daily"
+    labels:
+      - "ci-skippush"
