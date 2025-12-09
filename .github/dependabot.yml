@@ -9,7 +9,7 @@ updates:
       - "github-actions"
       - "ci-skippush"
   - package-ecosystem: "docker"
-    directory: "/apps/whoami"
+    directory: "/whoami"
     schedule:
       interval: "daily"
     labels:
