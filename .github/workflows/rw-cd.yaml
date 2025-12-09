@@ -22,6 +22,8 @@ on:
 jobs:
   CD:
     runs-on: self-hosted
+    if: >
+      !contains(github.event.pull_request.labels.*.name, 'ci-skippush')
     strategy:
       matrix:
         apps: ${{ fromJson(inputs.paths_modified) }}
@@ -35,9 +37,7 @@ jobs:
         version: 'latest'
 
     - name: Deploy
-      if: >
-        ${{ matrix.apps != inputs.skip_cd }} ||
-        !contains(github.event.pull_request.labels.*.name, 'ci-skippush')
+      if: ${{ matrix.apps != inputs.skip_cd }}
       run: |
         sed -i "s/^name: .*/name: ${{ matrix.apps }}/" .helm-tmpl/Chart.yaml
         sed -i "s/^appVersion: .*/appVersion: ${{ inputs.tag }}/" .helm-tmpl/Chart.yaml
