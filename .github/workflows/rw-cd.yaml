@@ -22,6 +22,8 @@ on:
 jobs:
   CD:
     runs-on: self-hosted
+    if: >
+      !contains(github.event.pull_request.labels.*.name, 'ci-skippush')
     strategy:
       matrix:
         apps: ${{ fromJson(inputs.paths_modified) }}
