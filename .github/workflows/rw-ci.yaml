@@ -87,6 +87,7 @@ jobs:
     - name: Container Build
       uses: docker/build-push-action@v6
       with:
+        context: ${{ steps.set_build_context.outputs.build_context }}
         load: true
         tags: ${{ secrets.DOCKER_USERNAME }}/${{ matrix.apps }}:${{ steps.set_tag.outputs.tag }}
 
