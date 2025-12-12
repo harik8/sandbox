@@ -1,0 +1,37 @@
+name: AWS
+
+on:
+  workflow_call:
+    outputs:
+      aws_credentials:
+        description: AWS Credentials
+        value: ""
+
+jobs:
+  AWS:
+    runs-on: ubuntu-latest
+    # outputs:
+    #   aws_credentials:  ${{ steps.paths_modified.outputs.paths_modified }}
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 2
+
+    - name: AWS - Set AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v5.1.1
+      with:
+        aws-region: ${{ vars.AWS_REGION }}
+        role-to-assume: ${{ secrets.AWS_IAM_GITHUB_OIDC_ROLE_ARN }}
+        role-session-name: gh_set_aws_credentials
+
+    - name: AWS - Assume Role
+      id: aws_assume_role
+      uses: aws-actions/configure-aws-credentials@v5.1.1
+      with:
+        aws-region: ${{ vars.AWS_REGION }}
+        role-to-assume: ${{ secrets.AWS_IAM_HP_DOT_DEV_GH_ROLE_ARN }}
+        role-session-name: gh_assume_role
+        role-chaining: true
+        output-credentials: true
