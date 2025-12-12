@@ -53,4 +53,4 @@ jobs:
       # Upload a file to AWS s3
     - name: INIT - List a S3 Bucket
       run: |
-          aws s3 ls s3://acb-bucket-presigned/
+          ls -lah .
