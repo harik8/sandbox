@@ -2,8 +2,8 @@ name: AWS
 
 on:
   workflow_call:
-    secrets:
-      inherit: true
+    # secrets:
+    #   inherit: true
 
 jobs:
   AWS:
