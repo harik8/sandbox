@@ -50,6 +50,14 @@ jobs:
         role-session-name: GitHubActions
         aws-region: ${{ vars.AWS_REGION }}
 
+    - name: INIT - Assume HP Dot Dev Role
+      uses: aws-actions/configure-aws-credentials@v5.1.1
+      with:
+        aws-region: ${{ vars.AWS_REGION }}
+        role-to-assume: ${{ secrets.AWS_IAM_HP_DOT_DEV_GH_ROLE_ARN }}
+        role-session-name: GitHubActions-HPDev
+        role-chaining: true
+
       # Upload a file to AWS s3
     - name: INIT - List a S3 Bucket
       run: |
