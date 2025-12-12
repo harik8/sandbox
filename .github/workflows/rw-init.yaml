@@ -12,8 +12,9 @@ on:
         description: List of modified apps
         value: ${{ jobs.INIT.outputs.paths_modified }}
     secrets:
-      AWS_IAM_GITHUB_OIDC_ROLE_ARN:
-        required: true
+      # AWS_IAM_GITHUB_OIDC_ROLE_ARN:
+      #   required: true
+      inherit: true
 
 jobs:
   INIT:
