@@ -43,23 +43,23 @@ jobs:
         echo "$paths_modified" >> $GITHUB_OUTPUT
         echo "EOF" >> $GITHUB_OUTPUT
 
-    - name: INIT - Set AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v5.1.1
-      with:
-        role-to-assume: ${{ secrets.AWS_IAM_GITHUB_OIDC_ROLE_ARN }}
-        role-session-name: gh_set_aws_credentials
-        aws-region: ${{ vars.AWS_REGION }}
+    # - name: INIT - Set AWS Credentials
+    #   uses: aws-actions/configure-aws-credentials@v5.1.1
+    #   with:
+    #     role-to-assume: ${{ secrets.AWS_IAM_GITHUB_OIDC_ROLE_ARN }}
+    #     role-session-name: gh_set_aws_credentials
+    #     aws-region: ${{ vars.AWS_REGION }}
 
-    - name: INIT - Assume Role
-      uses: aws-actions/configure-aws-credentials@v5.1.1
-      with:
-        aws-region: ${{ vars.AWS_REGION }}
-        role-to-assume: ${{ secrets.AWS_IAM_HP_DOT_DEV_GH_ROLE_ARN }}
-        role-session-name: gh_assume_role
-        role-chaining: true
+    # - name: INIT - Assume Role
+    #   uses: aws-actions/configure-aws-credentials@v5.1.1
+    #   with:
+    #     aws-region: ${{ vars.AWS_REGION }}
+    #     role-to-assume: ${{ secrets.AWS_IAM_HP_DOT_DEV_GH_ROLE_ARN }}
+    #     role-session-name: gh_assume_role
+    #     role-chaining: true
 
-      # Upload a file to AWS s3
-    - name: INIT - List a S3 Bucket
-      run: |
-          ls -lah .
-          aws s3 cp x.txt s3://${{ secrets.AWS_S3_HP_DOT_DEV_S3_BUCKET }}/
+    #   # Upload a file to AWS s3
+    # - name: INIT - List a S3 Bucket
+    #   run: |
+    #       ls -lah .
+    #       aws s3 cp x.txt s3://${{ secrets.AWS_S3_HP_DOT_DEV_S3_BUCKET }}/
