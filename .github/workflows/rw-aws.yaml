@@ -2,10 +2,8 @@ name: AWS
 
 on:
   workflow_call:
-    outputs:
-      aws_credentials:
-        description: AWS Credentials
-        value: ""
+    secrets:
+      inherit: true
 
 jobs:
   AWS:
