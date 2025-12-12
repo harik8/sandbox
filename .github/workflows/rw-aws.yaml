@@ -1,0 +1,51 @@
+name: AWS
+
+on:
+  workflow_call:
+    inputs:
+      commands:
+        type: string
+        description: AWS CLI commands to execute
+        required: false
+        default: |
+          aws --version
+    secrets:
+      AWS_IAM_GITHUB_OIDC_ROLE_ARN:
+        required: true
+      AWS_IAM_ASSUME_ROLE_ARN:
+        required: true
+
+jobs:
+  AWS:
+    runs-on: ubuntu-latest
+    outputs:
+      aws_access_key_id: ${{ steps.aws_assume_role.outputs.aws-access-key-id }}
+      aws_secret_access_key: ${{ steps.aws_assume_role.outputs.aws-secret-access-key }}
+      aws_session_token: ${{ steps.aws_assume_role.outputs.aws-session-token }}
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 2
+
+    - name: AWS - Set AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v5.1.1
+      with:
+        aws-region: ${{ vars.AWS_REGION }}
+        role-to-assume: ${{ secrets.AWS_IAM_GITHUB_OIDC_ROLE_ARN }}
+        role-session-name: gh_set_aws_credentials
+
+    - name: AWS - Assume Role
+      id: aws_assume_role
+      uses: aws-actions/configure-aws-credentials@v5.1.1
+      with:
+        aws-region: ${{ vars.AWS_REGION }}
+        role-to-assume: ${{ secrets.AWS_IAM_ASSUME_ROLE_ARN }}
+        role-session-name: gh_assume_role
+        role-chaining: true
+        output-credentials: true
+
+    - name: AWS - Execute Commands
+      run: |
+        ${{ inputs.commands }}
