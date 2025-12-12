@@ -2,16 +2,13 @@ name: AWS
 
 on:
   workflow_call:
-    outputs:
-      aws_access_key_id:
-        description: AWS Access Key ID
-        value: ${{ jobs.AWS.outputs.aws_access_key_id }}
-      aws_secret_access_key:
-        description: AWS Secret Access Key
-        value: ${{ jobs.AWS.outputs.aws_secret_access_key }}
-      aws_session_token:
-        description: AWS Session Token
-        value: ${{ jobs.AWS.outputs.aws_session_token }}
+    inputs:
+      commands:
+        type: string
+        description: AWS CLI commands to execute
+        required: false
+        default: |
+          aws --version
     secrets:
       AWS_IAM_GITHUB_OIDC_ROLE_ARN:
         required: true
@@ -49,8 +46,6 @@ jobs:
         role-chaining: true
         output-credentials: true
 
-    - name: AWS - Verify Identity
+    - name: AWS - Execute Commands
       run: |
-        echo "AWS_ACCESS_KEY_ID=${{ steps.aws_assume_role.outputs.aws-access-key-id }}" >> $GITHUB_ENV
-        echo "AWS_SECRET_ACCESS_KEY=${{ steps.aws_assume_role.outputs.aws-secret-access-key }}" >> $GITHUB_ENV
-        echo "AWS_SESSION_TOKEN=${{ steps.aws_assume_role.outputs.aws-session-token }}" >> $GITHUB_ENV
+        ${{ inputs.commands }}
