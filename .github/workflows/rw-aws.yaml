@@ -48,3 +48,9 @@ jobs:
         role-session-name: gh_assume_role
         role-chaining: true
         output-credentials: true
+
+    - name: AWS - Verify Identity
+      run: |
+        echo "AWS_ACCESS_KEY_ID=${{ steps.aws_assume_role.outputs.aws-access-key-id }}" >> $GITHUB_ENV
+        echo "AWS_SECRET_ACCESS_KEY=${{ steps.aws_assume_role.outputs.aws-secret-access-key }}" >> $GITHUB_ENV
+        echo "AWS_SESSION_TOKEN=${{ steps.aws_assume_role.outputs.aws-session-token }}" >> $GITHUB_ENV
