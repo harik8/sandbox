@@ -17,6 +17,7 @@ jobs:
     uses: ./.github/workflows/rw-init.yaml
     with:
       paths_ignore: '^(\.github|\.helm-tmpl|\.bash|charts)$'
+    secrets: inherit
     # secrets:
     #   AWS_IAM_GITHUB_OIDC_ROLE_ARN : ${{ secrets.AWS_IAM_GITHUB_OIDC_ROLE_ARN }}
 
