@@ -22,9 +22,9 @@ jobs:
   AWS:
     runs-on: ubuntu-latest
     outputs:
-      aws_access_key_id: ${{ steps.aws_assume_role.outputs.aws_access_key_id }}
-      aws_secret_access_key: ${{ steps.aws_assume_role.outputs.aws_secret_access_key }}
-      aws_session_token: ${{ steps.aws_assume_role.outputs.aws_session_token }}
+      aws_access_key_id: ${{ steps.aws_assume_role.outputs.aws-access-key-id }}
+      aws_secret_access_key: ${{ steps.aws_assume_role.outputs.aws-secret-access-key }}
+      aws_session_token: ${{ steps.aws_assume_role.outputs.aws-session-token }}
 
     steps:
     - name: Checkout repository
