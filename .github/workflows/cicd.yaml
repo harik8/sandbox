@@ -25,6 +25,7 @@ jobs:
       monorepo: true
       paths_modified: ${{ needs.INIT.outputs.paths_modified }}
     secrets:
+      AWS_IAM_GITHUB_OIDC_ROLE_ARN : ${{ secrets.AWS_IAM_GITHUB_OIDC_ROLE_ARN }}
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 

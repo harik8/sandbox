@@ -24,7 +24,7 @@ jobs:
       with:
         fetch-depth: 2
 
-    - name: Paths Modified
+    - name: INIT - Get Folders Changed
       id: paths_modified
       run: |
         paths_modified=$(git diff HEAD HEAD~ --name-only \
@@ -39,14 +39,14 @@ jobs:
         echo "$paths_modified" >> $GITHUB_OUTPUT
         echo "EOF" >> $GITHUB_OUTPUT
 
-    - name: configure aws credentials
-      uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502
+    - name: INIT - Set AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v5.1.1
       with:
         role-to-assume: ${{ secrets.AWS_IAM_GITHUB_OIDC_ROLE_ARN }}
         role-session-name: GitHubActions
         aws-region: ${{ vars.AWS_REGION }}
 
       # Upload a file to AWS s3
-    - name: List S3 Bucket Contents
+    - name: INIT - List a S3 Bucket
       run: |
           aws s3 ls s3://acb-bucket-presigned/
