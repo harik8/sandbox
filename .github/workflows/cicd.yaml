@@ -32,6 +32,6 @@ jobs:
     uses: ./.github/workflows/rw-cd.yaml
     with:
       paths_modified: ${{ needs.INIT.outputs.paths_modified }}
-      tag: ${{ needs.CI.outputs.tag }}
+      tag: ${{ needs.CI.outputs.cd_tag }}
     secrets:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
