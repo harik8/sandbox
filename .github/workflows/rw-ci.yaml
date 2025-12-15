@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ inputs.paths_modified != '[]' }}
     outputs:
-      tag: ${{ steps.set_tag.outputs.tag }}
+      tag: ${{ steps.set_tag.outputs.${{ matrix_apps }}_tag }}
     strategy:
       matrix:
         apps: ${{ fromJson(inputs.paths_modified) }}
@@ -78,7 +78,7 @@ jobs:
           fi
         fi
 
-        echo "tag=$tag" >> $GITHUB_OUTPUT
+        echo "${{ matrix.apps }}_tag=$tag" >> $GITHUB_OUTPUT
 
     - name: Container Build
       uses: docker/build-push-action@v6
