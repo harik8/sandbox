@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ inputs.paths_modified != '[]' }}
     outputs:
-      tag: ${{ steps.set_tag.outputs.tag }}
+      tag: ${{ steps.set_tag.outputs.cd_tag }}
     strategy:
       matrix:
         apps: ${{ fromJson(inputs.paths_modified) }}
@@ -84,6 +84,8 @@ jobs:
         fi
 
         if ${{ inputs.skip_cd }} != ${{ matrix.apps }}; then
+          echo "cd_tag=$tag" >> $GITHUB_OUTPUT
+        else
           echo "tag=$tag" >> $GITHUB_OUTPUT
         fi
 
