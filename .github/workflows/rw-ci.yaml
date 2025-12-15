@@ -56,23 +56,33 @@ jobs:
     - name: Set Build Context
       id: set_build_context
       run: |        
-        if [ "${{ inputs.monorepo }}" = "true" ]; then
-          build_context=${{ matrix.apps }}
-        else
+        if [ "${{ inputs.paths_modified }}" = ${{ github.event.repository.name }} ]; then
           build_context=.
+        else
+          build_context=${{ matrix.apps }}
         fi
 
         echo "build_context=$build_context" >> $GITHUB_OUTPUT
 
-    - name: Set Tag
+    - name: CI - Set Image Tag
       id: set_tag
-      run: |        
+      run: |
+        
+        APP_VERSION=$(grep 'ENV VERSION=' "${{ steps.set_build_context.outputs.build_context }}/Dockerfile" | cut -d'=' -f2)
+
         if [ "${{ github.event_name }}" = "pull_request" ]; then
-          tag=${{ github.head_ref }}-$(echo "${{ github.event.pull_request.head.sha }}" | head -c5)
-        elif [ "${{ inputs.tag_latest }}" = "true" ]; then
-          tag=latest
+          sha_short=$(echo "${{ github.event.pull_request.head.sha }}" | head -c5)
+          if [ -n "$APP_VERSION" ]; then
+            tag="$APP_VERSION-$sha_short"
+          else
+            tag="${{ github.head_ref }}-$sha_short"
+          fi
         else
-          tag=${{ github.ref_name }}-$(echo "${{ github.sha }}" | head -c5)
+          if [ -n "$APP_VERSION" ]; then
+            tag="$APP_VERSION"
+          else
+            tag="${{ github.ref_name }}-$(echo "${{ github.sha }}" | head -c5)"
+          fi
         fi
 
         echo "tag=$tag" >> $GITHUB_OUTPUT
