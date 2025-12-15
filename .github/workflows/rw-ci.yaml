@@ -13,6 +13,11 @@ on:
         description: List of modified apps
         default: '["${{ github.event.repository.name }}"]'
         required: false
+      skip_cd:
+        type: string
+        description: Apps to skip continuous deployment
+        default: gha-runner
+        required: false
     outputs:
       tag:
         description: Docker image tag
@@ -28,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ inputs.paths_modified != '[]' }}
     outputs:
-      tag: ${{ steps.set_tag.outputs.${{ matrix_apps }}_tag }}
+      tag: ${{ steps.set_tag.outputs.tag }}
     strategy:
       matrix:
         apps: ${{ fromJson(inputs.paths_modified) }}
@@ -78,7 +83,9 @@ jobs:
           fi
         fi
 
-        echo "${{ matrix.apps }}_tag=$tag" >> $GITHUB_OUTPUT
+        if ${{ inputs.skip_cd }} != ${{ matrix.apps }}; then
+          echo "tag=$tag" >> $GITHUB_OUTPUT
+        fi
 
     - name: Container Build
       uses: docker/build-push-action@v6
