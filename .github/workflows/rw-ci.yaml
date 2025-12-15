@@ -84,9 +84,9 @@ jobs:
         fi
 
         if ${{ inputs.skip_cd }} == ${{ matrix.apps }}; then
-          echo "cd_tag=$tag" >> $GITHUB_OUTPUT
-        else
           echo "tag=$tag" >> $GITHUB_OUTPUT
+        else
+          echo "cd_tag=$tag" >> $GITHUB_OUTPUT
         fi
 
     - name: Container Build
