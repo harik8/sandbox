@@ -8,20 +8,10 @@ on:
         description: List of build args for Docker build
         default: ""
         required: false
-      monorepo:
-        type: boolean
-        description: Whether the repo is a monorepo
-        default: false
-        required: false
       paths_modified:
         type: string
         description: List of modified apps
         default: '["${{ github.event.repository.name }}"]'
-        required: false
-      tag_latest:
-        type: boolean
-        description: Whether to tag the image as latest for main branch
-        default: false
         required: false
     outputs:
       tag:
@@ -56,23 +46,36 @@ jobs:
     - name: Set Build Context
       id: set_build_context
       run: |        
-        if [ "${{ inputs.monorepo }}" = "true" ]; then
-          build_context=${{ matrix.apps }}
-        else
+        if [ "${{ inputs.paths_modified }}" = ${{ github.event.repository.name }} ]; then
           build_context=.
+        else
+          build_context=${{ matrix.apps }}
         fi
 
         echo "build_context=$build_context" >> $GITHUB_OUTPUT
 
-    - name: Set Tag
+    - name: Set Image Tag
       id: set_tag
-      run: |        
+      run: |
+        
+        # There are two types of apps. One which have VERSION defined in Dockerfile like custom build addons e.g. gha-runner
+        # Another type is standard apps where we use git branch name or tag name as version
+        
+        VERSION=$(grep 'ENV VERSION=' "${{ steps.set_build_context.outputs.build_context }}/Dockerfile" | cut -d'=' -f2)
+
         if [ "${{ github.event_name }}" = "pull_request" ]; then
-          tag=${{ github.head_ref }}-$(echo "${{ github.event.pull_request.head.sha }}" | head -c5)
-        elif [ "${{ inputs.tag_latest }}" = "true" ]; then
-          tag=latest
+          sha_short=$(echo "${{ github.event.pull_request.head.sha }}" | head -c5)
+          if [ -n "$VERSION" ]; then
+            tag="$VERSION-$sha_short"
+          else
+            tag="${{ github.head_ref }}-$sha_short"
+          fi
         else
-          tag=${{ github.ref_name }}-$(echo "${{ github.sha }}" | head -c5)
+          if [ -n "$VERSION" ]; then
+            tag="$VERSION"
+          else
+            tag="${{ github.ref_name }}-$(echo "${{ github.sha }}" | head -c5)"
+          fi
         fi
 
         echo "tag=$tag" >> $GITHUB_OUTPUT

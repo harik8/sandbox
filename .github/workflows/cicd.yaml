@@ -22,7 +22,6 @@ jobs:
     needs: INIT
     uses: ./.github/workflows/rw-ci.yaml
     with:
-      monorepo: true
       paths_modified: ${{ needs.INIT.outputs.paths_modified }}
     secrets:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}

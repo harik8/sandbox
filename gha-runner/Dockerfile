@@ -1,7 +1,7 @@
 FROM ubuntu:20.04
 
 # Set environment variables
-ENV RUNNER_VERSION=2.329.0
+ENV VERSION=2.329.0
 ENV RUNNER_ARCH=x64
 ENV RUNNER_HASH=194f1e1e4bd02f80b7e9633fc546084d8d4e19f3928a324d512ea53430102e1d
 ENV DEBIAN_FRONTEND=noninteractive
@@ -28,11 +28,11 @@ RUN useradd -m runner && mkdir -p /actions-runner && chown runner:runner /action
 WORKDIR /actions-runner
 
 # Download and extract runner
-RUN curl -o actions-runner-linux-${RUNNER_ARCH}-${RUNNER_VERSION}.tar.gz -L \
-    https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-${RUNNER_ARCH}-${RUNNER_VERSION}.tar.gz && \
-    echo "${RUNNER_HASH} *actions-runner-linux-${RUNNER_ARCH}-${RUNNER_VERSION}.tar.gz" | shasum -a 256 -c && \
-    tar xzf ./actions-runner-linux-${RUNNER_ARCH}-${RUNNER_VERSION}.tar.gz && \
-    rm actions-runner-linux-${RUNNER_ARCH}-${RUNNER_VERSION}.tar.gz
+RUN curl -o actions-runner-linux-${RUNNER_ARCH}-${VERSION}.tar.gz -L \
+    https://github.com/actions/runner/releases/download/v${VERSION}/actions-runner-linux-${RUNNER_ARCH}-${VERSION}.tar.gz && \
+    echo "${RUNNER_HASH} *actions-runner-linux-${RUNNER_ARCH}-${VERSION}.tar.gz" | shasum -a 256 -c && \
+    tar xzf ./actions-runner-linux-${RUNNER_ARCH}-${VERSION}.tar.gz && \
+    rm actions-runner-linux-${RUNNER_ARCH}-${VERSION}.tar.gz
 
 # Add entrypoint script
 COPY entrypoint.sh /entrypoint.sh
