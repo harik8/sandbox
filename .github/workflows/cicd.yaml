@@ -6,6 +6,12 @@ on:
     - main
     paths:
       - whoami/**
+    paths-ignore:
+      - '.github/**'
+      - '.helm-tmpl/**'
+      - '.bash/**'
+      - 'charts/**'
+      - 'gha-runner/**'
   pull_request:
     branches:
     - main
