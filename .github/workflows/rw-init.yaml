@@ -27,6 +27,7 @@ jobs:
     - name: Paths Modified
       id: paths_modified
       run: |
+        set +x
         paths_modified=$(git diff HEAD HEAD~ --name-only \
           | grep '/' \
           | cut -d'/' -f1 \
