@@ -4,19 +4,9 @@ on:
   push:
     branches:
     - main
-    # paths:
-    #   - whoami/**
-    paths-ignore:
-      - '.github/**'
-      - '.helm-tmpl/**'
-      - '.bash/**'
-      - 'charts/**'
-      - 'gha-runner/**'
   pull_request:
     branches:
     - main
-    paths:
-      - whoami/**
 
 permissions:
   id-token: write # This is required for requesting the JWT
@@ -26,7 +16,7 @@ jobs:
   INIT:
     uses: ./.github/workflows/rw-init.yaml
     with:
-      paths_ignore: '^(\.github|\.helm-tmpl|\.bash|charts)$'
+      paths_ignore: '^(\.github|\.helm-tmpl|\.bash|charts|gha-runner)$'
 
   CI:
     needs: INIT
