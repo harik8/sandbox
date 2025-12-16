@@ -3,9 +3,9 @@ name: INIT
 on:
   workflow_call:
     inputs:
-      paths_ignore:
+      paths_include:
         type: string
-        description: List of folders or files to ignore changes
+        description: List of folders to consider for modification
         required: false
     outputs:
       paths_modified:
@@ -31,7 +31,7 @@ jobs:
         paths_modified=$(git diff HEAD HEAD~ --name-only \
           | grep '/' \
           | cut -d'/' -f1 \
-          | grep -vE '${{ inputs.paths_ignore }}' \
+          | grep -E "${{ inputs.paths_include }}" \
           | sort -u \
           | jq -R . | jq -s .)
         echo $paths_modified

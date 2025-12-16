@@ -16,7 +16,7 @@ jobs:
   INIT:
     uses: ./.github/workflows/rw-init.yaml
     with:
-      paths_ignore: '^(\.github|\.helm-tmpl|\.bash|charts|gha-runner)$'
+      paths_include: 'whoami'
 
   CI:
     needs: INIT

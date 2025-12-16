@@ -18,7 +18,7 @@ jobs:
   INIT:
     uses: ./.github/workflows/rw-init.yaml
     with:
-      paths_ignore: '^(\.github|\.helm-tmpl|\.bash|charts)$'
+      paths_include: 'gha-runner'
 
   CI:
     needs: INIT
