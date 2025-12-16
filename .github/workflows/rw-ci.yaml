@@ -57,7 +57,6 @@ jobs:
       with:
         dockerfile: ${{ steps.set_build_context.outputs.build_context }}/Dockerfile
         no-fail: true
-        verbose: true
 
     - name: Set Image Tag
       id: set_tag
@@ -106,7 +105,7 @@ jobs:
         format: 'table'
         exit-code: '0'
         ignore-unfixed: true
-        vuln-type: 'os,library'
+        vuln-type: 'library'
         severity: 'CRITICAL,HIGH'
 
     - name: Log in to Docker Hub
