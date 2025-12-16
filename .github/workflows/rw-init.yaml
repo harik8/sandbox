@@ -31,7 +31,6 @@ jobs:
         paths_modified=$(git diff HEAD HEAD~ --name-only \
           | grep '/' \
           | cut -d'/' -f1 \
-          # | grep -E '${{ inputs.paths_include }}' \
           | sort -u \
           | jq -R . | jq -s .)
         echo $paths_modified
