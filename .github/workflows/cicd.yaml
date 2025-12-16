@@ -4,8 +4,8 @@ on:
   push:
     branches:
     - main
-    paths:
-      - whoami/**
+    # paths:
+    #   - whoami/**
     paths-ignore:
       - '.github/**'
       - '.helm-tmpl/**'
