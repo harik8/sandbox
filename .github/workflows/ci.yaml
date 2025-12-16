@@ -4,11 +4,13 @@ on:
   push:
     branches:
     - main
+    paths:
+      - gha-runner/**
   pull_request:
     branches:
     - main
-  paths:
-    - gha-runner/**
+    paths:
+      - gha-runner/**
 
 permissions:
   id-token: write # This is required for requesting the JWT

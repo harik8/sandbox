@@ -39,6 +39,8 @@ jobs:
     - name: Deploy
       if: ${{ matrix.apps != inputs.skip_cd }}
       run: |
+        set +x
+        
         sed -i "s/^name: .*/name: ${{ matrix.apps }}/" .helm-tmpl/Chart.yaml
         sed -i "s/^appVersion: .*/appVersion: ${{ inputs.tag }}/" .helm-tmpl/Chart.yaml
 
