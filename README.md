@@ -4,11 +4,14 @@
 </p>
 Manal Petti
 <p align="center">
-  <a href="(https://github.com/harik8/sandbox/actions/workflows/cicd.yaml">
+  <a href="https://github.com/harik8/sandbox/actions/workflows/cicd.yaml">
     <img src="https://github.com/harik8/sandbox/actions/workflows/cicd.yaml/badge.svg?branch=main" alt="CICD" />
   </a>
 </p>
 </h1>
+
+[![Hadolint](https://img.shields.io/badge/dockerfile-hadolint-green)](https://github.com/hadolint/hadolint)
+[![Trivy](https://img.shields.io/badge/security-trivy-blue)](https://github.com/aquasecurity/trivy)
 
 ## ABOUT
 
@@ -23,3 +26,6 @@ It includes:
  - Containerized applications
 
 It is implemented in a way that allows it to be easily deployed on any Kubernetes flavor.
+
+
+
