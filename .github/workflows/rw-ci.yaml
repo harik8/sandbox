@@ -18,8 +18,6 @@ on:
         description: Docker image tag
         value: ${{ jobs.CI.outputs.tag }}
     secrets:
-      DOCKER_USERNAME:
-        required: true
       DOCKER_PASSWORD:
         required: true
         
@@ -53,6 +51,12 @@ jobs:
         fi
 
         echo "build_context=$build_context" >> $GITHUB_OUTPUT
+
+    - name: Lint Dockerfile
+      uses: hadolint/hadolint-action@v3.1.0
+      with:
+        dockerfile: ${{ steps.set_build_context.outputs.build_context }}/Dockerfile
+        no-fail: true
 
     - name: Set Image Tag
       id: set_tag
@@ -92,14 +96,24 @@ jobs:
       with:
         context: ${{ steps.set_build_context.outputs.build_context }}
         load: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/${{ steps.set_app_name.outputs.app_name }}:${{ steps.set_tag.outputs.tag }}
+        tags: ${{ vars.DOCKER_USERNAME }}/${{ steps.set_app_name.outputs.app_name }}:${{ steps.set_tag.outputs.tag }}
+
+    - name: Scan Image
+      uses: aquasecurity/trivy-action@0.33.1
+      with:
+        image-ref: ${{ vars.DOCKER_USERNAME }}/${{ steps.set_app_name.outputs.app_name }}:${{ steps.set_tag.outputs.tag }}
+        format: 'table'
+        exit-code: '0'
+        ignore-unfixed: true
+        vuln-type: 'library'
+        severity: 'CRITICAL,HIGH'
 
     - name: Log in to Docker Hub
       uses: docker/login-action@v3
       if: >  
         !contains(github.event.pull_request.labels.*.name, 'ci-skippush')
       with:
-        username: ${{ secrets.DOCKER_USERNAME }}
+        username: ${{ vars.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Build / Push Container Image
@@ -110,7 +124,7 @@ jobs:
         context: ${{ steps.set_build_context.outputs.build_context }}
         platforms: linux/amd64
         push: true
-        tags:  ${{ secrets.DOCKER_USERNAME }}/${{ steps.set_app_name.outputs.app_name }}:${{ steps.set_tag.outputs.tag }}
+        tags:  ${{ vars.DOCKER_USERNAME }}/${{ steps.set_app_name.outputs.app_name }}:${{ steps.set_tag.outputs.tag }}
 
     - name: Image digest
       run: echo ${{ steps.build.outputs.digest }}

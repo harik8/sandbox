@@ -11,7 +11,7 @@ on:
         description: Docker image tag
         required: true
     secrets:
-      DOCKER_USERNAME:
+      DOCKER_PASSWORD:
         required: true
         
 jobs:
@@ -48,7 +48,7 @@ jobs:
         helm upgrade --install --rollback-on-failure \
           --create-namespace \
           --namespace ${{ steps.set_app_name.outputs.app_name }} \
-          --set image.repository=${{ secrets.DOCKER_USERNAME }}/${{ steps.set_app_name.outputs.app_name }} \
+          --set image.repository=${{ vars.DOCKER_USERNAME }}/${{ steps.set_app_name.outputs.app_name }} \
           --set image.tag=${{ inputs.tag }} \
           -f .helm-tmpl/values.yaml -f ${{ matrix.apps }}/.helm/values.yaml -f ${{ matrix.apps }}/.helm/sandbox/values.yaml \
           ${{ steps.set_app_name.outputs.app_name }} .helm-tmpl
