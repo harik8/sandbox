@@ -99,12 +99,12 @@ jobs:
       with:
         context: ${{ steps.set_build_context.outputs.build_context }}
         load: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/${{ steps.set_app_name.outputs.app_name }}:${{ steps.set_tag.outputs.tag }}
+        tags: ${{ vars.DOCKER_USERNAME }}/${{ steps.set_app_name.outputs.app_name }}:${{ steps.set_tag.outputs.tag }}
 
     - name: Scan Image
       uses: aquasecurity/trivy-action@0.33.1
       with:
-        image-ref: ${{ secrets.DOCKER_USERNAME }}/${{ steps.set_app_name.outputs.app_name }}:${{ steps.set_tag.outputs.tag }}
+        image-ref: ${{ vars.DOCKER_USERNAME }}/${{ steps.set_app_name.outputs.app_name }}:${{ steps.set_tag.outputs.tag }}
         format: 'table'
         exit-code: '0'
         ignore-unfixed: true
@@ -116,7 +116,7 @@ jobs:
       if: >  
         !contains(github.event.pull_request.labels.*.name, 'ci-skippush')
       with:
-        username: ${{ secrets.DOCKER_USERNAME }}
+        username: ${{ vars.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Build / Push Container Image
@@ -127,7 +127,7 @@ jobs:
         context: ${{ steps.set_build_context.outputs.build_context }}
         platforms: linux/amd64
         push: true
-        tags:  ${{ secrets.DOCKER_USERNAME }}/${{ steps.set_app_name.outputs.app_name }}:${{ steps.set_tag.outputs.tag }}
+        tags:  ${{ vars.DOCKER_USERNAME }}/${{ steps.set_app_name.outputs.app_name }}:${{ steps.set_tag.outputs.tag }}
 
     - name: Image digest
       run: echo ${{ steps.build.outputs.digest }}
