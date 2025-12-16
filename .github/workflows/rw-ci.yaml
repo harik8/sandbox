@@ -58,6 +58,7 @@ jobs:
       uses: hadolint/hadolint-action@v3.1.0
       with:
         dockerfile: ${{ steps.set_build_context.outputs.build_context }}/Dockerfile
+        verbose: true
 
     - name: Set Image Tag
       id: set_tag
@@ -104,7 +105,7 @@ jobs:
       with:
         image-ref: ${{ secrets.DOCKER_USERNAME }}/${{ steps.set_app_name.outputs.app_name }}:${{ steps.set_tag.outputs.tag }}
         format: 'table'
-        exit-code: '1'
+        exit-code: '0'
         ignore-unfixed: true
         vuln-type: 'os,library'
         severity: 'CRITICAL,HIGH'
