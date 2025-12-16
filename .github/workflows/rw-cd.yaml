@@ -11,7 +11,7 @@ on:
         description: Docker image tag
         required: true
     secrets:
-      DOCKER_USERNAME:
+      DOCKER_PASSWORD:
         required: true
         
 jobs:
