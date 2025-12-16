@@ -57,7 +57,7 @@ jobs:
     - name: Set Image Tag
       id: set_tag
       run: |
-        
+        set +x
         # There are two types of apps. One which have VERSION defined in Dockerfile like custom build addons e.g. gha-runner
         # Another type is standard apps where we use git branch name or tag name as version
         
@@ -80,7 +80,7 @@ jobs:
 
         echo "tag=$tag" >> $GITHUB_OUTPUT
 
-    - name: Container Build
+    - name: Build Container Image
       uses: docker/build-push-action@v6
       with:
         context: ${{ steps.set_build_context.outputs.build_context }}
@@ -95,7 +95,7 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Build and push Container image
+    - name: Build / Push Container Image
       uses: docker/build-push-action@v4
       if: >
         !contains(github.event.pull_request.labels.*.name, 'ci-skippush')

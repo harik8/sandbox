@@ -6,11 +6,6 @@ on:
       paths_modified:
         type: string
         description: List of modified apps
-      skip_cd:
-        type: string
-        description: Apps to skip continuous deployment
-        default: gha-runner
-        required: false
       tag:
         type: string
         description: Docker image tag
@@ -37,8 +32,9 @@ jobs:
         version: 'latest'
 
     - name: Deploy
-      if: ${{ matrix.apps != inputs.skip_cd }}
       run: |
+        set +x
+
         sed -i "s/^name: .*/name: ${{ matrix.apps }}/" .helm-tmpl/Chart.yaml
         sed -i "s/^appVersion: .*/appVersion: ${{ inputs.tag }}/" .helm-tmpl/Chart.yaml
 
