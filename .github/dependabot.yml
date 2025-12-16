@@ -6,16 +6,11 @@ updates:
     schedule:
       interval: "daily"
     labels:
-      - "github-actions"
       - "ci-skippush"
   - package-ecosystem: "docker"
-    directory: "/whoami"
-    schedule:
-      interval: "daily"
-    labels:
-      - "ci-skippush"
-  - package-ecosystem: "docker"
-    directory: "/gha-runner"
+    directories: 
+      - "/apps/whoami"
+      - "/images/gha-runner"
     schedule:
       interval: "daily"
     labels:
