@@ -31,17 +31,24 @@ jobs:
       with:
         version: 'latest'
 
+    - name: Set App Name
+      id: set_app_name
+      run: |
+        set +x
+        app_name=$(echo "${{ matrix.apps }}" | cut -f2 -d '/')
+        echo "app_name=$app_name" >> $GITHUB_OUTPUT
+
     - name: Deploy
       run: |
         set +x
 
-        sed -i "s/^name: .*/name: ${{ matrix.apps }}/" .helm-tmpl/Chart.yaml
+        sed -i "s/^name: .*/name: ${{ steps.set_app_name.outputs.app_name }}/" .helm-tmpl/Chart.yaml
         sed -i "s/^appVersion: .*/appVersion: ${{ inputs.tag }}/" .helm-tmpl/Chart.yaml
 
         helm upgrade --install --atomic \
           --create-namespace \
           --namespace ${{ matrix.apps }} \
-          --set image.repository=${{ secrets.DOCKER_USERNAME }}/${{ matrix.apps }} \
+          --set image.repository=${{ secrets.DOCKER_USERNAME }}/${{ steps.set_app_name.outputs.app_name }} \
           --set image.tag=${{ inputs.tag }} \
-          -f .helm-tmpl/values.yaml -f ${{ matrix.apps }}/.helm/values.yaml -f ${{ matrix.apps }}/.helm/sandbox/values.yaml \
-          ${{ matrix.apps }} .helm-tmpl
+          -f .helm-tmpl/values.yaml -f ${{ steps.set_app_name.outputs.app_name }}/.helm/values.yaml -f ${{ steps.set_app_name.outputs.app_name }}/.helm/sandbox/values.yaml \
+          ${{ steps.set_app_name.outputs.app_name }} .helm-tmpl
