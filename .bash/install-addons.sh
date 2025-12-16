@@ -43,7 +43,7 @@ if [ $RUNNER_TOKEN ]; then
   helm upgrade --install --atomic \
     --create-namespace \
     --namespace gha-runner \
-	  --set image.tag="$(grep 'ENV VERSION=' "gha-runner/Dockerfile" | cut -d'=' -f2)" \
+	  --set image.tag="$(grep 'ENV VERSION=' "images/gha-runner/Dockerfile" | cut -d'=' -f2)" \
 	  --set env[1].value=$RUNNER_TOKEN \
     -f gha-runner/.helm/values.yaml -f gha-runner/.helm/sandbox/values.yaml \
     gha-runner .helm-tmpl
