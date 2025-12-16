@@ -92,7 +92,7 @@ jobs:
       with:
         context: ${{ steps.set_build_context.outputs.build_context }}
         load: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/${{ steps.set_app_name.outputs.app_name }} | cut -f2 -d '/':${{ steps.set_tag.outputs.tag }}
+        tags: ${{ secrets.DOCKER_USERNAME }}/${{ steps.set_app_name.outputs.app_name }}:${{ steps.set_tag.outputs.tag }}
 
     - name: Log in to Docker Hub
       uses: docker/login-action@v3
