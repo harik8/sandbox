@@ -18,8 +18,6 @@ on:
         description: Docker image tag
         value: ${{ jobs.CI.outputs.tag }}
     secrets:
-      DOCKER_USERNAME:
-        required: true
       DOCKER_PASSWORD:
         required: true
         

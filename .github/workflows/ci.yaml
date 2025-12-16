@@ -26,5 +26,4 @@ jobs:
     with:
       paths_modified: ${{ needs.INIT.outputs.paths_modified }}
     secrets:
-      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
