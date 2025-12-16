@@ -8,7 +8,7 @@ on:
     branches:
     - main
     paths:
-      - gha-runner/**
+      - images/**
 
 permissions:
   id-token: write # This is required for requesting the JWT
@@ -18,7 +18,7 @@ jobs:
   INIT:
     uses: ./.github/workflows/rw-init.yaml
     with:
-      paths_include: 'gha-runner'
+      paths_include: 'images'
 
   CI:
     needs: INIT
