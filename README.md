@@ -7,7 +7,7 @@ Manal Petti
 </p>
 </h1>
 
-# ABOUT
+## ABOUT
 
 "**Manal Petti**" (மணல் பெட்டி) in Tamil means Sandbox. Sand(மணல்) - Manal Box/Container(பெட்டி) - Petti.
 
