@@ -16,7 +16,7 @@ jobs:
   INIT:
     uses: ./.github/workflows/rw-init.yaml
     with:
-      paths_include: 'whoami'
+      paths_include: 'apps'
 
   CI:
     needs: INIT
