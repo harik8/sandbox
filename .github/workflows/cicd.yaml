@@ -32,3 +32,5 @@ jobs:
     with:
       paths_modified: ${{ needs.INIT.outputs.paths_modified }}
       tag: ${{ needs.CI.outputs.tag }}
+    secrets:
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
