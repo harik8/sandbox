@@ -83,8 +83,9 @@ jobs:
     - name: Set App Name
       id: set_app_name
       run: |
+        set +x
         app_name=$(echo "${{ matrix.apps }}" | cut -f2 -d '/')
-        echo "app_name=${app_name}" >> $GITHUB_OUTPUT
+        echo "app_name=$app_name" >> $GITHUB_OUTPUT
 
     - name: Build Container Image
       uses: docker/build-push-action@v6
