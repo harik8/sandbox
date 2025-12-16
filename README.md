@@ -1,6 +1,6 @@
 <h1 align="center">
 <p align="center">
-  <img src="./.asserts/manalpetti.png" width="100" />
+  <img src="./.asserts/manalpetti.png" width="200" />
 </p>
 Manal Petti
 <p align="center">
