@@ -5,7 +5,7 @@ on:
     branches:
     - main
     paths:
-    - whoami/**
+      - whoami/**
   pull_request:
     branches:
     - main
