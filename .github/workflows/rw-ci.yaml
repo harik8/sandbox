@@ -44,7 +44,7 @@ jobs:
     - name: Set Build Context
       id: set_build_context
       run: |        
-        if [ "${{ inputs.paths_modified }}" = ${{ github.event.repository.name }} ]; then
+        if [ "${{ fromJson(inputs.paths_modified) }}" = ${{ github.event.repository.name }} ]; then
           build_context=.
         else
           build_context=${{ matrix.apps }}
