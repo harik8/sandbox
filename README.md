@@ -1,4 +1,7 @@
 <h1 align="center">
+<p align="center">
+  <img src="./.asserts/manalpetti.png" width="100" />
+</p>
 Manal Petti
 <p align="center">
   <a href="(https://github.com/harik8/sandbox/actions/workflows/cicd.yaml">
@@ -9,12 +12,14 @@ Manal Petti
 
 ## ABOUT
 
-"**Manal Petti**" (மணல் பெட்டி) in Tamil means Sandbox. Sand(மணல்) - Manal Box/Container(பெட்டி) - Petti.
+**Manal Petti (மணல் பெட்டி)** means Sandbox in Tamil.
+Manal (மணல்) means sand, and Petti (பெட்டி) means box or container.
 
-This repository contains code for my **BREAK-LEARN-FIX** or Sandbox environment. 
-It includes,
- - GH workflow for CICD
- - Kubernetes addons 
- - Containarized applications.
+This repository contains code for my **BREAK–LEARN–FIX** sandbox environment.
 
-It is being implemented in a way that can be easily deployed any Kubernetes flavour.  
+It includes:
+ - GitHub workflows for CI/CD
+ - Kubernetes add-ons
+ - Containerized applications
+
+It is implemented in a way that allows it to be easily deployed on any Kubernetes flavor.
