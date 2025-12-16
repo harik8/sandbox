@@ -50,7 +50,6 @@ jobs:
           build_context=${{ matrix.apps }}
         fi
 
-        echo "$build_context"
         echo "build_context=$build_context" >> $GITHUB_OUTPUT
 
     - name: Lint Dockerfile
